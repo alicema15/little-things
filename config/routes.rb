@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   
   get 'vignette' => 'application#vignette', :as => "vignette"
   get 'branches' => 'branch#home', :as => "branches"
+  get 'map' => 'map#home', :as => "map"
 
 
   # The priority is based upon order of creation: first created -> highest priority.
