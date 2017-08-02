@@ -1,0 +1,16 @@
+.container-fluid
+    .col-xs-12.col-sm-6
+        %h1 
+            = link_to v4_home_path, id: "back-button", class: "pull-left btn btn-primary" do
+                %span.glyphicon.glyphicon-chevron-left
+            Call me, maybe?
+        %label
+            MESSAGE
+        %input.form-control{type: "text"}
+        %br
+        %button#textbutton.btn.btn-block.btn-danger
+            SEND TEXT
+:scss
+    #back-button{
+        margin-right: 10px;
+    }

@@ -1,0 +1,30 @@
+#being
+    = link_to v2_home_path, id: "back-button", class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-chevron-left
+    %h1 ᕦ(ò_ó)ᕤ
+    %h2 LEAVE ME ALONE!!!
+    
+:scss
+    #being{
+        height: 100%;
+        width: 100%;
+        color: white;
+        font-family: Avenir, sans-serif;
+        font-size: 4em;
+        text-align: center;
+            
+        background: desaturate(red, 70%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        h1{
+            font-size: 1.5em;
+        }
+    }
+    #back-button{
+        position: absolute;
+        z-index: 100;
+        top: 15px;
+        left: 15px;
+    }

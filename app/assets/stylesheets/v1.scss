@@ -1,0 +1,19 @@
+// Place all the styles related to the v1 controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#container{
+    position: relative;
+    height: 100%;
+}
+
+#top-half{
+    height: 50%;
+    overflow: hidden;
+    position:absolute;
+    z-index: 999;
+}
+
+#bottom-half{
+    position:relative;
+}
+

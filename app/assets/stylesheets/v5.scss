@@ -1,0 +1,239 @@
+// Place all the styles related to the v5 controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+//The following functions are from https://tallys.github.io/color-theory/
+@function is-cool-color($color) {
+	@return hue($color) < 300 and hue($color) > 120;
+}
+@function is-high-key-value($color) {
+	@return hue($color) > 30 and hue($color) < 140;
+}
+@function harmonious-mix($mix, $base) {
+	@if (is-cool-color($mix)){
+		@if is-high-key-value($base) {
+			@return mix($mix, $base, 11%);
+		}
+		@else {
+			@return mix($mix, $base, 16%);
+		}
+	}
+	@else {
+		@if is-high-key-value($base) {
+			@return mix($mix, $base, 13%);
+		}
+		@else {
+			@return mix($mix, $base, 23%);
+		}
+	}
+}
+@function mix-neutral($color) {
+	@if (is-highest-key-value($color)) {
+		@if is-high-key-value(complement($color)) {
+			@return mix(complement($color), $color, 19%);
+		}
+		@else {
+			@return mix(complement($color), $color, 13%);
+		}
+	}
+	@else if (is-high-key-value($color)) {
+		@if is-high-key-value(complement($color)) {
+			@return mix(complement($color), $color, 31%);
+		}
+		@else {
+			@return mix(complement($color), $color, 23%);
+		}
+	}
+	@else {
+		@if is-highest-key-value(complement($color)) {
+			@return mix(complement($color), $color, 31%);
+		}
+		@if is-high-key-value(complement($color)) {
+			@return mix(complement($color), $color, 26%);
+		}
+		@else {
+			@return mix(complement($color), $color, 23%);
+		}
+	}
+}
+
+//Flexbox CSS
+$background: #88499c;
+$block: #e78024;
+$base: yellow;
+$complement: complement($base);
+$neutral: mix-neutral($base);
+
+
+body {
+    background: $background;
+}
+.flexbox-container{
+    background: $background;
+    height: 33.33333%;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-block{
+    background: #e78024;
+    width: 230px;
+    height: 170px;
+    margin: 10px 10px 10px 10px;
+}
+
+.space {
+  -webkit-justify-content: space-between;
+  justify-content:         space-between;
+}
+
+.justify{
+    justify-content: center
+}
+
+.empty{
+    background: #88499c !important;
+}
+
+.wide{
+    width: 100%;
+    margin: 10px 10px 10px 10px;
+
+}
+.long{
+    height: 100%;
+}
+.margin{
+        margin-bottom: 20px;
+}
+
+//SWATCHES
+.swatch {
+    width:60px;
+    height:60px;
+    margin-top: 30px;
+    margin-right: 5px;
+}
+.box1 {
+    background: $base;
+}
+.box2 {
+    background: $complement;
+}
+.box3 {
+    background: harmonious-mix($base, $complement);
+}
+.box4 {
+    background: harmonious-mix($complement, $base);
+}
+
+.box6{
+    background: $neutral;
+}
+
+.box5{
+    background: lighten($neutral, 20);
+}
+
+.box7{
+    background: darken($neutral, 20);
+}
+.box9{
+    background:  mix-neutral($complement);
+}
+
+.box8{
+    background: lighten(mix-neutral($complement), 20);
+}
+
+.box10{
+    background: darken(mix-neutral($complement), 20);
+}
+
+.box1r {
+    background: red;
+}
+.box2r {
+    background: complement(red);
+}
+.box3r {
+    background: harmonious-mix(red, complement(red));
+}
+.box4r {
+    background: harmonious-mix(complement(red), red);
+}
+
+.box6r{
+    background: mix-neutral(red);
+}
+
+.box5r{
+    background: lighten(mix-neutral(red), 20);
+}
+
+.box7r{
+    background: darken(mix-neutral(red), 20);
+}
+.box9r{
+    background:  mix-neutral(complement(red));
+}
+
+.box8r{
+    background: lighten(mix-neutral(complement(red)), 20);
+}
+
+.box10r{
+    background: darken(mix-neutral(complement(red)), 20);
+}
+
+
+.box1b {
+    background: blue;
+}
+.box2b {
+    background: complement(blue);
+}
+.box3b {
+    background: harmonious-mix(blue, complement(blue));
+}
+.box4b {
+    background: harmonious-mix(complement(blue), blue);
+}
+
+.box6b{
+    background: mix-neutral(blue);
+}
+
+.box5b{
+    background: lighten(mix-neutral(blue), 20);
+}
+
+.box7b{
+    background: darken(mix-neutral(blue), 20);
+}
+.box9b{
+    background:  mix-neutral(complement(blue));
+}
+
+.box8b{
+    background: lighten(mix-neutral(complement(blue)), 20);
+}
+
+.box10b{
+    background: darken(mix-neutral(complement(blue)), 20);
+}
+
+
+.white{
+    background: white !important;
+}
+
+#center{
+    padding-top: 13%;
+}
+

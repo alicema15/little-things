@@ -1,0 +1,110 @@
+:coffeescript
+    $ ->
+        console.warn "IS JQUERYUI DROPPABLE INSTALLED?", $(window).droppable
+    $ ->
+        $('#drop-square').draggable revert: 'invalid'
+        $('#dropzone1.dropzone').droppable 
+            hoverClass: (event, ui) ->
+                $('#drop-square').addClass('medium-red-button')
+            drop: (event, ui) ->
+                $('#drop-square').addClass('dark-red-button')
+                return
+        $('#dropzone2.dropzone').droppable 
+            hoverClass: (event, ui) ->
+                $('#drop-square').addClass('medium-blue-button')
+            drop: (event, ui) ->
+                $('#drop-square').addClass('dark-blue-button')
+                return
+
+    
+#touchpad
+    #drop-square
+        %h2 DROP ME!
+    #dropzone1.dropzone
+        %h2 DROPZONE1
+    #dropzone2.dropzone
+        %h2 DROPZONE2
+
+
+    
+// IGNORE, BUT KEEP THIS LINE (Back button)   
+= render :partial => "application/back_to_root"
+    
+:scss
+    $touchpad-bg: desaturate(cyan, 70%);
+    $touch-square: lighten($touchpad-bg, 70%);
+    #touchpad{
+        height: 100%;
+        width: 100%;
+        color: white;
+        font-family: Avenir, sans-serif;
+        font-size: 4em;
+        text-align: center;
+            
+        background: darken($touchpad-bg, 20%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        #drop-square{
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            background: $touch-square;
+            color: darken($touchpad-bg, 60%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            h2{
+                font-size: 22px;
+            }
+        }
+        #dropzone1{
+            width: 300px;
+            height: 300px;
+            background: lighten(desaturate(cyan, 70%), 40%);
+        }
+        #dropzone2{
+            width: 300px;
+            height: 400px;
+            background: lighten(desaturate(cyan, 50%), 20%);
+            
+        }
+        .dropzone{
+            margin: 10px;
+            color: darken($touchpad-bg, 60%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            h2{
+                font-size: 22px;
+            }
+        }
+        .medium-red-button{
+            background: lighten(desaturate(red, 50%), 20%) !important;
+            color: 'red';
+        }
+        .dark-red-button{
+            background: desaturate(red, 50%) !important;
+            color: 'red';
+        }
+        .medium-blue-button{
+            background: #194bff !important;
+        }
+        .dark-blue-button{
+            background: #0327a8 !important;
+        }
+
+    }
+    
+    #back-button{
+        position: absolute;
+        z-index: 100;
+        top: 15px;
+        left: 15px;
+    }
+    
+
+    

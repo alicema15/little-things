@@ -1,0 +1,26 @@
+.container-fluid.np
+    .col-xs-12.col-sm-6.np
+        .panel.panel-primary
+            .panel-heading 
+                %span
+                    %b Vignette 4: 
+                    WebAPIs
+                = link_to root_path, class:"btn btn-xs btn-primary pull-left" do
+                    %span.glyphicon.glyphicon-chevron-left
+                
+            .panel-body
+                %ul.list-group
+                    %li.list-group-item 
+                        = link_to v4_twitter_path do
+                            %b #1
+                            Twitter
+                            %span.pull-right.glyphicon.glyphicon-chevron-right
+                    %li.list-group-item 
+                        = link_to v4_twilio_path do
+                            %b #2
+                            Twillio
+                            %span.pull-right.glyphicon.glyphicon-chevron-right
+                    
+            .panel-footer
+                CS160 - Intro to UI Design and Development
+   

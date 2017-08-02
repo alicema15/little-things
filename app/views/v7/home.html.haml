@@ -1,0 +1,22 @@
+:coffeescript
+    $ ->
+        Utility.paperSetup "paperCanvas" 
+        c = new paper.Path.Circle
+            radius: 40
+            fillColor: "#00A8E1"
+            position: paper.view.center
+
+
+%canvas#paperCanvas
+
+// IGNORE, BUT KEEP THIS LINE (Back button)   
+= render :partial => "application/back_to_root"
+    
+:scss
+    #paperCanvas{
+        width: 100%;
+        height: 100%;
+        background: #f5f4f0;
+        cursor: pointer;
+    }
+       

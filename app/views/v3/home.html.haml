@@ -1,0 +1,72 @@
+:coffeescript
+    $ ->
+        console.warn "IS HAMMER INSTALLED?", Hammer
+    window.onload = ->
+        $(document).bind 'touchmove', (e)->
+            e.preventDefault()	
+        square = document.getElementById('square')
+        el = new Hammer(square)
+        el.on ' panright tap press swipeleft', (ev) ->
+            square.textContent = ev.type + ' '
+            return
+        mc = new (Hammer.Manager)(square)
+        pinch = new (Hammer.Pinch)
+        rotate = new (Hammer.Rotate)
+        pinch.recognizeWith rotate
+        mc.add [
+            pinch
+            rotate
+        ]
+        mc.on 'pinch rotate', (ev) ->
+            square.textContent = ev.type + ' '
+            return
+        return
+    
+#touchpad
+    #square
+    %h2 TOUCH ME!
+    
+// IGNORE, BUT KEEP THIS LINE (Back button)   
+= render :partial => "application/back_to_root"
+    
+:scss
+    $touchpad-bg: desaturate(green, 70%);
+    $touch-square: lighten($touchpad-bg, 70%);
+    #touchpad{
+        height: 100%;
+        width: 100%;
+        color: white;
+        font-family: Avenir, sans-serif;
+        font-size: 4em;
+        text-align: center;
+            
+        background: $touchpad-bg;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        }
+    #square{
+        width: 250px;
+        height: 250px;
+        background: $touch-square;
+        text-align: center;
+        color: black;
+        font-family: Avenir, sans-serif;
+        font-size: 12pt;
+    }
+    #back-button{
+        position: absolute;
+        z-index: 100;
+        top: 15px;
+        left: 15px;
+    }
+    
+    body, html{
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    

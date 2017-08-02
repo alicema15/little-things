@@ -1,0 +1,44 @@
+// Place all the styles related to the v1 controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.one-third{
+    height: 33.33333%;
+    display: table;
+
+}
+.two-third{
+    height: 66.6666%;
+    display: table;
+}
+.one-ninth{
+    height: 11.11111%;
+    display: table;
+}
+.white{
+    background-color:white;
+}
+.light-gray{
+    background-color:#c6c6c6;
+}
+.medium-gray{
+    background-color:#918f8f;
+}
+.dark-gray{
+    background-color:#4f4e4e;
+}
+
+.fill { 
+    min-height: 100%;
+    height: 100%;
+}
+.custom {
+    vertical-align: middle !important;
+    font-size: 40px;
+    display: table-cell !important;
+    width: 100%;
+    color: white;
+}
+.black {
+    color: black !important;
+}

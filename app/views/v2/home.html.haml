@@ -1,0 +1,26 @@
+.container-fluid.np
+    .col-xs-12.col-sm-6.np
+        .panel.panel-primary
+            .panel-heading 
+                %span
+                    %b Vignette 2: 
+                    WebAPIs
+                = link_to root_path, class:"btn btn-xs btn-primary pull-left" do
+                    %span.glyphicon.glyphicon-chevron-left
+                
+            .panel-body
+                %ul.list-group
+                    %li.list-group-item 
+                        = link_to v2_instadesktop_path do
+                            %b #1
+                            Instadesktop
+                            %span.pull-right.glyphicon.glyphicon-chevron-right
+                    %li.list-group-item 
+                        = link_to v2_opposition_path do
+                            %b #2
+                            Oppositional Phone
+                            %span.pull-right.glyphicon.glyphicon-chevron-right
+                    
+            .panel-footer
+                CS160 - Intro to UI Design and Development
+   

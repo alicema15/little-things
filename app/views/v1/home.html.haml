@@ -1,0 +1,5 @@
+#container
+    #top-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_next)
+    #bottom-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_before)
+// IGNORE, BUT KEEP THIS LINE (Back button)   
+= render :partial => "application/back_to_root"
