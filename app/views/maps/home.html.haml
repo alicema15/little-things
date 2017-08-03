@@ -335,6 +335,23 @@
       infoWindow.setPosition pos
       infoWindow.setContent if browserHasGeolocation then 'Error: The Geolocation service failed.' else 'Error: Your browser doesn\'t support geolocation.'
       infoWindow.open map
+
+      iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+      icons = 
+        parking: icon: iconBase + 'parking_lot_maps.png'
+        library: icon: iconBase + 'library_maps.png'
+        info: icon: iconBase + 'info-i_maps.png'
+      features = [
+        {
+          position: new google.maps.LatLng(my_lat, my_lng), 
+          type: 'parking'
+        }
+      ]
+      features.forEach (feature) ->
+        marker = new (google.maps.Marker)(
+          position: feature.position
+          icon: icons[feature.type].icon
+          map: map)
       return
           
     $(window).load ->
@@ -343,7 +360,6 @@
       my_lat = parseFloat($('#lat').val());
       my_lng = parseFloat($('#lng').val());
       map = new initMap(my_lat, my_lng)
-      
       return
 
 %head
