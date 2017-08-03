@@ -4,7 +4,20 @@
         ctx = canvas.getContext('2d')
         w = canvas.width
         h = canvas.height
-
+        
+        MAXHEIGHT = 13
+        CURRHEIGHT = 6
+        
+        clearCanvas = ->
+            canvas.width = canvas.width
+            ctx.scale 1, -1
+            ctx.translate 150, -440
+            ctx.lineWidth = 10
+            ctx.lineCap = 'round'
+            ctx.strokeStyle = '#592c18'
+            ctx.fillStyle = 'green'
+            console.log "canvas cleared"
+            
         drawTree = (i) ->
             l = 40 + 80 * Math.random()
             # draw leaves
@@ -25,15 +38,18 @@
             if i <= 0
                 return
             ctx.save()
+            
             # draw a stem
             ctx.beginPath()
             ctx.moveTo 0, 0
             ctx.lineTo 0, l
             ctx.stroke()
             ctx.globalAlpha *= 0.7 + Math.random() * 0.4
+            
             # move to end of stem and get smaller
             ctx.translate 0, l
             ctx.scale 0.75, 0.75
+            
             # draw right branch
             ctx.save()
             ctx.rotate Math.PI / 20 + Math.random() * 2 / i
@@ -65,7 +81,7 @@
         ctx.lineCap = 'round'
         ctx.strokeStyle = '#592c18'
         ctx.fillStyle = 'green'
-        drawTree 12
+        drawTree CURRHEIGHT
         
         ctx.restore()
         sx = 0.75
@@ -73,10 +89,26 @@
         ctx.globalAlpha = 0.2
         ctx.globalCompositeOperation = 'destination-over'
 
+        $('.clear').on 'click', clearCanvas
+        $('.grow').click ->
+            clearCanvas()
+            CURRHEIGHT++
+            if CURRHEIGHT <= MAXHEIGHT
+                drawTree CURRHEIGHT
+            else
+                clearCanvas()
+                CURRHEIGHT = 6
+            return
         
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
+    .button-container
+        .button.clear Clear Screen
+        .button.grow Grow Tree
+        .button.drop Drop Seed
+    .grass
+        =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
 
 
 // IGNORE, BUT KEEP THIS LINE (Back button)   
@@ -100,4 +132,25 @@
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4', endColorstr='#6AB3F7' ,GradientType=0)";
         background : linear-gradient(-0.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4',endColorstr='#6AB3F7' , GradientType=1);
-    }   
+    }
+    .button-container{
+        position: absolute;
+        top: 60px;
+        width: 100px;
+    }
+    .button{
+        width: 100%;
+        height:25px;
+        margin-bottom: 5px;
+        color: #3b9fed;
+        border-style: solid;
+        border-width: 2px;
+        border-color: #3b9fed;
+        background-color: white;
+        text-align: center;
+        z-index: 10;
+    }
+    .grass{
+        position: absolute;
+        bottom: 0px;
+    }
