@@ -329,13 +329,6 @@
       else
         # Browser doesn't support Geolocation
         handleLocationError false, infoWindow, map.getCenter()
-      return
-    
-    handleLocationError = (browserHasGeolocation, infoWindow, pos) ->
-      infoWindow.setPosition pos
-      infoWindow.setContent if browserHasGeolocation then 'Error: The Geolocation service failed.' else 'Error: Your browser doesn\'t support geolocation.'
-      infoWindow.open map
-
       iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
       icons = 
         parking: icon: iconBase + 'parking_lot_maps.png'
@@ -353,6 +346,13 @@
           icon: icons[feature.type].icon
           map: map)
       return
+    
+    handleLocationError = (browserHasGeolocation, infoWindow, pos) ->
+      infoWindow.setPosition pos
+      infoWindow.setContent if browserHasGeolocation then 'Error: The Geolocation service failed.' else 'Error: Your browser doesn\'t support geolocation.'
+      infoWindow.open map
+
+
           
     $(window).load ->
       console.log "window loaded"
