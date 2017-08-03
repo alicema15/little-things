@@ -58,3 +58,7 @@ gem 'twilio-ruby', '~> 5.0.0.rc26'
 #'paper.js' imported manually via /vendor/javascripts/
 
 
+#MAPS
+gem 'geocoder'
+
+
