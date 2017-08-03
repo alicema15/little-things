@@ -338,7 +338,14 @@
         {
           position: new google.maps.LatLng(my_lat, my_lng), 
           type: 'parking'
+        }, {
+          position: new google.maps.LatLng(37.8758251, -122.2588599)
+          type: 'parking'
+        }, {
+          position: new google.maps.LatLng(37.8761331, -122.2592569)
+          type: 'parking'
         }
+        
       ]
       features.forEach (feature) ->
         marker = new (google.maps.Marker)(
