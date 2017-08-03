@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   namespace :v8 do
     get "home"
   end
-  
+
+
   get 'vignette' => 'application#vignette', :as => "vignette"
   get 'branches' => 'branch#home', :as => "branches"
 
