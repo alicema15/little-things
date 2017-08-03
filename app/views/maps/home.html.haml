@@ -1,14 +1,14 @@
 :coffeescript
   console.log "coffeescript is running"
   $ -> 
-    initMap = (my_lat) ->
+    initMap = (my_lat, my_lng) ->
       # Styles a map in night mode.
       console.log "map is running"
       console.log my_lat
       map = new (google.maps.Map)(document.getElementById('map'),
         center:
           lat: my_lat
-          lng: -122.258851
+          lng: my_lng
         zoom: 19
         styles: [
           {
@@ -311,8 +311,8 @@
       console.log "window loaded"
       console.log initMap
       my_lat = parseFloat($('#lat').val());
-      my_long = parseFloat($('#lng').val());
-      map = new initMap(my_lat)
+      my_lng = parseFloat($('#lng').val());
+      map = new initMap(my_lat, my_lng)
       
       return
 
