@@ -334,25 +334,42 @@
         parking: icon: iconBase + 'parking_lot_maps.png'
         library: icon: iconBase + 'library_maps.png'
         info: icon: iconBase + 'info-i_maps.png'
+      
       features = [
         {
           position: new google.maps.LatLng(my_lat, my_lng), 
           type: 'parking'
+        }, {
+          position: new google.maps.LatLng(37.8758251, -122.2588599)
+          type: 'parking'
+        }, {
+          position: new google.maps.LatLng(37.8761331, -122.2592569)
+          type: 'parking'
         }
+        
       ]
+      
       features.forEach (feature) ->
         marker = new (google.maps.Marker)(
           position: feature.position
           icon: icons[feature.type].icon
           map: map)
+        marker.addListener('click', toggleBounce)
+      console.log("add listener")
+      return
+    
+    toggleBounce = ->
+      console.log("do I bounce or what?")
+      if this.getAnimation() != null
+        this.setAnimation null
+      else
+        this.setAnimation google.maps.Animation.BOUNCE
       return
     
     handleLocationError = (browserHasGeolocation, infoWindow, pos) ->
       infoWindow.setPosition pos
       infoWindow.setContent if browserHasGeolocation then 'Error: The Geolocation service failed.' else 'Error: Your browser doesn\'t support geolocation.'
       infoWindow.open map
-
-
           
     $(window).load ->
       console.log "window loaded"
