@@ -20,6 +20,7 @@
             
         drawTree = (i) ->
             l = 40 + 80 * Math.random()
+            
             # draw leaves
             if i <= 1
                 ctx.beginPath()
@@ -35,6 +36,7 @@
                 else if colorRandom > 1.5 && colorRandom < 2
                     ctx.fillStyle = "#b9f7ed"
                 ctx.fill()
+            
             if i <= 0
                 return
             ctx.save()
@@ -54,6 +56,7 @@
             ctx.save()
             ctx.rotate Math.PI / 20 + Math.random() * 2 / i
             
+            # makes tree bushier
             drawTree i-1
             if i > 5
                 drawTree i-3
@@ -109,8 +112,7 @@
         .button.drop Drop Seed
     .grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
-
-
+    
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 = render :partial => "application/back_to_root"
     
@@ -154,3 +156,4 @@
         position: absolute;
         bottom: 0px;
     }
+   
