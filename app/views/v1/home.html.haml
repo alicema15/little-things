@@ -1,5 +1,42 @@
-#container
-    #top-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_next)
-    #bottom-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_before)
-// IGNORE, BUT KEEP THIS LINE (Back button)   
-= render :partial => "application/back_to_root"
+// #container
+//     #top-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_next)
+//     #bottom-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_before)
+// // IGNORE, BUT KEEP THIS LINE (Back button)   
+// = render :partial => "application/back_to_root"
+
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    :css
+      input[type=text] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border: none;
+          background-color: #3CBC8D;
+          color: white;
+      }
+  %body
+    %form
+      %h2  Today, at a cafe near you a seed was planted
+      %input#fname{:name => "fname", :type => "text",}/
+.row 
+  .col-xs-3
+    = image_tag "text png.png", :width=> "17%", :id=>"system-img"
+    = image_tag "music png.png", :width=> "17%", :id=>"system-img"
+    = image_tag "camera png.png", :width=> "20%", :id=>"system-img"
+    = image_tag "paintbrush-png-13.png", :width=> "17%", :id=>"system-img"
+    
+:scss
+
+  #system-img:hover {
+    width: 23%;
+  }
+  
+  h2 {
+    font-family: garamond;
+    font-style: italic;
+  }
+

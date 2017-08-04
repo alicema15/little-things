@@ -8,7 +8,7 @@
             .panel-body
                 %ul.list-group
                     %li.list-group-item 
-                        = link_to v1_home_path do
+                        = link_to map_path do
                             %b #1
                             Maps API
                             %span.pull-right.glyphicon.glyphicon-chevron-right
@@ -16,6 +16,11 @@
                         = link_to branches_path do
                             %b #2
                             Branches
+                            %span.pull-right.glyphicon.glyphicon-chevron-right
+                    %li.list-group-item 
+                        = link_to "/home_page" do
+                            %b #3
+                            Home
                             %span.pull-right.glyphicon.glyphicon-chevron-right
                     %li.list-group-item 
                         = link_to vignette_path do

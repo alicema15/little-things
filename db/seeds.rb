@@ -5,3 +5,34 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+jacobs = Location.create
+jacobs.latitude = 37.876094
+jacobs.longitude = -122.258851
+jacobs.name = "JacobsHall"
+jacobs.save
+
+yalis = Location.create
+yalis.latitude = 37.8734167
+yalis.longitude = -122.2686006
+yalis.name = "Yali'sCafe"
+yalis.save
+
+wozniak = Location.create
+wozniak.name = "WozniakLounge"
+wozniak.latitude = 37.8758251
+wozniak.longitude = -122.2588599
+wozniak.save
+
+stebbins = Location.create
+stebbins.name = "StebbinsHall"
+stebbins.latitude = 37.8761331
+stebbins.longitude = -122.2592569
+stebbins.save
+
+va = Location.create
+va.latitude = 37.875543
+va.longitude = -122.258959
+va.name = "V&ACafe"
+va.save
