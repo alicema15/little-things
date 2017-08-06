@@ -45,11 +45,10 @@ Rails.application.routes.draw do
     get "home"
   end
 
-
   get 'vignette' => 'application#vignette', :as => "vignette"
   get 'branches' => 'branches#home', :as => "branches"
   get 'map' => 'maps#home', :as => "map"
-
+  get 'home' => 'homepage#home', :as => "home"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
