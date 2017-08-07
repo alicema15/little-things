@@ -117,70 +117,13 @@
                     %mpath{"xlink:href" => "#theMotionPath"}
 
 
-
-    .grass
+    %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
-    
-    
+        %div.imgscroll
+            %p WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee
+            
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 = render :partial => "application/back_to_root"
-
-// old PaperJS code
-// Utility.paperSetup "paperCanvas" 
-
-// window.t = new paper.Tool
-
-// # bottom bar specs
-// bottom_bar_height = 200
-
-// # seed specs
-// seed_x_pos = paper.view.center.x
-// seed_y_pos = paper.view.center.y * 2
-// seed_radius = 10
-// seed_color = "#00A8E1"
-
-// c = new paper.Path.Circle
-//   radius: seed_radius
-//   fillColor: seed_color
-  
-//   position: new Point(seed_x_pos, seed_y_pos - bottom_bar_height)
-
-// t.onMouseDown = (event) ->
-//   tl_corner = event.point
-  
-//   console.log(tl_corner.y)
-
-//   # makeRectangle(tl_corner)
-//   mysize = new Size(30,30)
-//   createBranches(tl_corner, mysize, 90)
-
-// # helper methods
-// makeRectangle = (tl_corner) ->
-//   myColor = Color.random()
-//   mysize = 30
-//   newRect = Path.Rectangle(tl_corner, mysize)
-  
-//   newRect.fillColor = myColor
-
-// createBranches = (starting_pt, size, angle)->
-//   # angle = angle from horizon
-//   # a = width of change; b = height
-//   # LHS = (x - a, y - b); RHS = (x + a, y - b)
-  
-//   a = size * Math.cos angle
-//   b = size * Math.sin angle
-  
-//   console.log("a")
-//   newLeftPoint = new Point(starting_pt.x - size.width, starting_pt.y - size.height)
-//   newRightPoint = new Point(starting_pt.x + size.width, starting_pt.y - size.height)
-  
-  
-  
-//   leftPath = new Path.Line(starting_pt, newLeftPoint)
-//   leftPath.strokeColor = "black"
-//   rightPath = new Path.Line(starting_pt, newRightPoint)
-//   rightPath.strokeColor = "black"
-
 
 :scss
     #canvas{
@@ -221,9 +164,16 @@
         z-index: 100;
     }
     .grass{
-        position: absolute;
-        bottom: 0px;
+        position: relative;
+        bottom: 15%;
         z-index: 51;
+        overflow: hidden;
+        
+        .imgscroll{
+           position: absolute;
+           bottom: 20%;
+           overflow: scroll;
+        }
     }
     #Layer_1 {
         position: absolute;
