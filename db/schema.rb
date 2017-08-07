@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170805210415) do
+ActiveRecord::Schema.define(version: 20170807180602) do
 
   create_table "locations", force: :cascade do |t|
-    t.float  "longitude"
-    t.float  "latitude"
+    t.float  "longitude", default: 0.0
+    t.float  "latitude",  default: 0.0
     t.string "name"
   end
 

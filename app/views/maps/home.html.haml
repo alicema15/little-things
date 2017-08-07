@@ -362,16 +362,6 @@
             infoWindow.setPosition pos
             infoWindow.setContent 'My Location.'
             infoWindow.open map
-            image = 
-              url: 'blue.png'
-              scaledSize: new google.maps.Size(60, 60)
-              origin: new google.maps.Point(0, 0)
-              anchor: new google.maps.Point(0, 0)
-            marker = new (google.maps.Marker)(
-              position: pos
-              icon: image
-              map: map)
-            
             map.setCenter pos
             Plant = getNearby: (my_lat, my_long) ->
               console.log "you're about to make an ajax call"

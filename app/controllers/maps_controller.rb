@@ -33,6 +33,7 @@ class MapsController < ApplicationController
     else
       @lat = ""
       @long = ""
+      @png = ""
     end
     respond_to do |format|
       format.js
