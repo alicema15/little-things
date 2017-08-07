@@ -348,13 +348,21 @@
         }
         
       ]
-      
+
       features.forEach (feature) ->
+        my_lat = feature.position.lat()
+        my_lng = feature.position.lng()
+        image = 
+          url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+          size: new google.maps.Size(20, 32)
+          origin: new google.maps.Point(my_lat, my_lng)
+          anchor: new google.maps.Point(my_lat, my_lng)
         marker = new (google.maps.Marker)(
           position: feature.position
           icon: icons[feature.type].icon
           map: map)
         marker.addListener('click', toggleBounce)
+        console.log(icons[feature].type).icon
       console.log("add listener")
       return
     
