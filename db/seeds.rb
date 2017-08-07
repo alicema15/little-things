@@ -36,3 +36,22 @@ va.latitude = 37.875543
 va.longitude = -122.258959
 va.name = "V&ACafe"
 va.save
+
+ife = Location.create
+ife.latitude = 37.8687289
+ife.longitude = -122.2601618
+ife.name = "Indian Flavors Express"
+ife.save
+    
+mlk = Location.create
+mlk.latitude = 37.869015
+mlk.longitude = -122.259918
+mlk.name = "MLK Student Union"
+mlk.save
+
+
+alice = Location.create
+alice.latitude = 37.865126
+alice.longitude = -122.257159
+alice.name = "Alice's House"
+alice.save
