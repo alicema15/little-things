@@ -45,10 +45,10 @@ Rails.application.routes.draw do
     get "home"
   end
 
-
   get 'vignette' => 'application#vignette', :as => "vignette"
   get 'branches' => 'branches#home', :as => "branches"
   get 'map' => 'maps#home', :as => "map"
+  get 'home' => 'homepage#home', :as => "home"
   post 'map/nearby' => 'maps#check_nearby', :as => "check_nearby"
 
 

@@ -1,0 +1,240 @@
+:coffeescript
+    $ ->
+        canvas = document.getElementById('canvas')
+        ctx = canvas.getContext('2d')
+        w = canvas.width
+        h = canvas.height
+        
+        MAXHEIGHT = 13
+        CURRHEIGHT = 6
+        
+        clearCanvas = ->
+            canvas.width = canvas.width
+            ctx.scale 1, -1
+            ctx.translate 150, -440
+            ctx.lineWidth = 10
+            ctx.lineCap = 'round'
+            ctx.strokeStyle = '#592c18'
+            ctx.fillStyle = 'green'
+            console.log "canvas cleared"
+            
+        drawTree = (i) ->
+            l = 40 + 80 * Math.random()
+            
+            # draw leaves
+            if i <= 1
+                ctx.beginPath()
+                ctx.arc 0, 0, 25, 0, 2 * Math.PI
+
+                # ctx.arc 0, 0, l * (1 + Math.random()) / 4, 0, 2 * Math.PI
+                
+                colorRandom = Math.random() * 3
+                if colorRandom < 2.5 && colorRandom > 2
+                    ctx.fillStyle = "orange"
+                else if colorRandom < 3 && colorRandom > 2.5
+                    ctx.fillStyle = "yellow"
+                else if colorRandom > 1.5 && colorRandom < 2
+                    ctx.fillStyle = "#b9f7ed"
+                ctx.fill()
+            
+            if i <= 0
+                return
+            ctx.save()
+            
+            # draw a stem
+            ctx.beginPath()
+            ctx.moveTo 0, 0
+            ctx.lineTo 0, l
+            ctx.stroke()
+            ctx.globalAlpha *= 0.7 + Math.random() * 0.4
+            
+            # move to end of stem and get smaller
+            ctx.translate 0, l
+            ctx.scale 0.75, 0.75
+            
+            # draw right branch
+            ctx.save()
+            ctx.rotate Math.PI / 20 + Math.random() * 2 / i
+            
+            # makes tree bushier
+            drawTree i-1
+            if i > 5
+                drawTree i-3
+
+            ctx.restore()
+            
+            # draw left branch
+            ctx.save()
+            ctx.rotate -Math.PI / 20 - (Math.random() * 2 / i)
+            drawTree i - 1
+            if i > 5
+                drawTree i-3
+            ctx.restore()
+            ctx.restore()
+            return
+
+        clamp = (x, min, max) ->
+            Math.min Math.max(x, min), max
+
+
+        ctx.save()
+        ctx.scale 1, -1
+        ctx.translate 150, -440
+        ctx.lineWidth = 10
+        ctx.lineCap = 'round'
+        ctx.strokeStyle = '#592c18'
+        ctx.fillStyle = 'green'
+        drawTree CURRHEIGHT
+        
+        ctx.restore()
+        sx = 0.75
+        ctx.transform 1, 0, sx, 1, -h * sx, 0
+        ctx.globalAlpha = 0.2
+        ctx.globalCompositeOperation = 'destination-over'
+
+        $('.clear').on 'click', clearCanvas
+        $('.grow').click ->
+            clearCanvas()
+            CURRHEIGHT++
+            if CURRHEIGHT <= MAXHEIGHT
+                drawTree CURRHEIGHT
+            else
+                CURRHEIGHT = 5
+            return
+
+
+.container-fluid
+    %canvas#canvas{:height => "400", :width => "280"}
+    .button-container
+        .button.clear Clear Screen
+        .button.grow Grow Tree
+        .button.drop Drop Seed
+    %svg#Layer_1{:space => "preserve", :style => "enable-background:new 0 0 375 667;", :version => "1.1", :viewbox => "new 0 0 375 667", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
+        %path#theMotionPath{:d => d="M0,364.4c0,0,173.5-42.2,199.6,200.1", :fill => "none"}
+        %svg{:xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
+            %image#seed{:href => "http://www.clker.com/cliparts/D/p/H/E/2/n/apple-seed-hi.png", :width => "50px",:height => "30px", :x => "0", :y => "0"}
+                %animatemotion{:dur => "1s", :repeatcount => "indefinite"}
+                    %mpath{"xlink:href" => "#theMotionPath"}
+
+
+
+    .grass
+        =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
+    
+    
+// IGNORE, BUT KEEP THIS LINE (Back button)   
+= render :partial => "application/back_to_root"
+
+// old PaperJS code
+// Utility.paperSetup "paperCanvas" 
+
+// window.t = new paper.Tool
+
+// # bottom bar specs
+// bottom_bar_height = 200
+
+// # seed specs
+// seed_x_pos = paper.view.center.x
+// seed_y_pos = paper.view.center.y * 2
+// seed_radius = 10
+// seed_color = "#00A8E1"
+
+// c = new paper.Path.Circle
+//   radius: seed_radius
+//   fillColor: seed_color
+  
+//   position: new Point(seed_x_pos, seed_y_pos - bottom_bar_height)
+
+// t.onMouseDown = (event) ->
+//   tl_corner = event.point
+  
+//   console.log(tl_corner.y)
+
+//   # makeRectangle(tl_corner)
+//   mysize = new Size(30,30)
+//   createBranches(tl_corner, mysize, 90)
+
+// # helper methods
+// makeRectangle = (tl_corner) ->
+//   myColor = Color.random()
+//   mysize = 30
+//   newRect = Path.Rectangle(tl_corner, mysize)
+  
+//   newRect.fillColor = myColor
+
+// createBranches = (starting_pt, size, angle)->
+//   # angle = angle from horizon
+//   # a = width of change; b = height
+//   # LHS = (x - a, y - b); RHS = (x + a, y - b)
+  
+//   a = size * Math.cos angle
+//   b = size * Math.sin angle
+  
+//   console.log("a")
+//   newLeftPoint = new Point(starting_pt.x - size.width, starting_pt.y - size.height)
+//   newRightPoint = new Point(starting_pt.x + size.width, starting_pt.y - size.height)
+  
+  
+  
+//   leftPath = new Path.Line(starting_pt, newLeftPoint)
+//   leftPath.strokeColor = "black"
+//   rightPath = new Path.Line(starting_pt, newRightPoint)
+//   rightPath.strokeColor = "black"
+
+
+:scss
+    #canvas{
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        margin-top: 30px;
+        z-index: 1;
+    }
+    .container-fluid {
+        min-height: 100%;
+        padding: 0px;
+        background : -moz-linear-gradient(50.3% 68.44% 90.52deg,rgba(135, 213, 244, 1) 0%,rgba(106, 179, 247, 1) 100%);
+        background : -webkit-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
+        background : -webkit-gradient(linear,50.3% 68.44% ,49.68% 29.71% ,color-stop(0,rgba(135, 213, 244, 1) ),color-stop(1,rgba(106, 179, 247, 1) ));
+        background : -o-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
+        background : -ms-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4', endColorstr='#6AB3F7' ,GradientType=0)";
+        background : linear-gradient(-0.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4',endColorstr='#6AB3F7' , GradientType=1);
+        z-index: 0;
+    }
+    .button-container{
+        position: absolute;
+        top: 60px;
+        width: 100px;
+    }
+    .button{
+        width: 100%;
+        height:25px;
+        margin-bottom: 5px;
+        color: #3b9fed;
+        border-style: solid;
+        border-width: 2px;
+        border-color: #3b9fed;
+        background-color: white;
+        text-align: center;
+        z-index: 10;
+    }
+    .grass{
+        position: absolute;
+        bottom: 0px;
+    }
+    #Layer_1 {
+        position: absolute;
+        top: 0px;
+        z-index: 20;
+    }
+    .svg {
+        z-index: 20;
+    }
+    #theMotionPath {
+        z-index: 20;
+    }
+    #seed{
+        z-index: 50;
+    }

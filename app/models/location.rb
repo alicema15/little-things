@@ -25,7 +25,6 @@ class Location < ActiveRecord::Base
     rad_per_deg = Math::PI/180  # PI / 180
     rkm = 6371                  # Earth radius in kilometers
     rm = rkm * 1000             # Radius in meters
-  
     dlat_rad = (loc2[0]-loc1[0]) * rad_per_deg  # Delta, converted to rad
     dlon_rad = (loc2[1]-loc1[1]) * rad_per_deg
   

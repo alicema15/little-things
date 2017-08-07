@@ -48,3 +48,10 @@ mlk.latitude = 37.869015
 mlk.longitude = -122.259918
 mlk.name = "MLK Student Union"
 mlk.save
+
+
+alice = Location.create
+alice.latitude = 37.865126
+alice.longitude = -122.257159
+alice.name = "Alice's House"
+alice.save
