@@ -1,0 +1,15 @@
+.panel.panel-default.panel-form
+  .panel-heading
+    %h4 Your Profile Information
+  .panel-body
+    = simple_form_for @location, :url => location_create_path(:id => @location.id)  do |f|
+      %p Title: 
+      = f.input :title
+      %br/
+      %p Latitude: 
+      = f.input :latitude
+      %br/
+      %p Longitude: 
+      = f.input :longitude
+      %br/
+      = f.submit

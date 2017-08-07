@@ -348,7 +348,10 @@
       window.seed_window.show = false
       infoWindow = new (google.maps.InfoWindow)
       window.features = new Array
+      
+      // this holds the marker for the seed, if it's empty, show false
       window.seed = false
+      
       if navigator.geolocation
         f = ->
           options = 
