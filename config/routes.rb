@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   get 'vignette' => 'application#vignette', :as => "vignette"
   get 'branches' => 'branches#home', :as => "branches"
   get 'map' => 'maps#home', :as => "map"
+  post 'map/nearby' => 'maps#check_nearby', :as => "check_nearby"
 
 
   # The priority is based upon order of creation: first created -> highest priority.
