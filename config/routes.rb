@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   
   get 'map/add_location' => 'locations#new_location', :as => "location_new"
   post 'map/add_location' => 'locations#create_location', :as => "location_create"
+  get 'map/locations' => 'locations#show', :as => "show_location"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
