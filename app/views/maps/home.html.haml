@@ -339,23 +339,29 @@
         {
           position: new google.maps.LatLng(my_lat, my_lng), 
           type: 'parking'
-        }, {
-          position: new google.maps.LatLng(37.8758251, -122.2588599)
-          type: 'parking'
-        }, {
-          position: new google.maps.LatLng(37.8761331, -122.2592569)
-          type: 'parking'
         }
-        
       ]
-      
+      window.marker_content = contentString = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' + '<div id="bodyContent">' + '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' + 'sandstone rock formation in the southern part of the ' + 'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) ' + 'south west of the nearest large town, Alice Springs; 450&#160;km ' + '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major ' + 'features of the Uluru - Kata Tjuta National Park. Uluru is ' + 'sacred to the Pitjantjatjara and Yankunytjatjara, the ' + 'Aboriginal people of the area. It has many springs, waterholes, ' + 'rock caves and ancient paintings. Uluru is listed as a World ' + 'Heritage Site.</p>' + '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' + 'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' + '(last visited June 22, 2009).</p>' + '</div>' + '</div>'
+      window.seed_window = new (google.maps.InfoWindow)(content: marker_content)
+
       features.forEach (feature) ->
+        my_lat = feature.position.lat()
+        my_lng = feature.position.lng()
+    
+        image = 
+          url: "http://developer.helpscout.net/seed/images/seed.png"
+          scaledSize: new google.maps.Size(60, 60)
+          origin: new google.maps.Point(0, 0)
+          anchor: new google.maps.Point(0, 0)
+        
         marker = new (google.maps.Marker)(
           position: feature.position
-          icon: icons[feature.type].icon
+          icon: image
           map: map)
         marker.addListener('click', toggleBounce)
-      console.log("add listener")
+        marker.addListener 'click', ->
+          window.seed_window.open map, marker
+        console.log("add listener")
       return
     
     toggleBounce = ->
