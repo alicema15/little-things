@@ -102,6 +102,38 @@
                 CURRHEIGHT = 5
             return
 
+        $(document).ready ->
+            $('#seed1').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#1').toggle 'show'
+            $('#seed2').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#2').toggle 'show'          
+            $('#seed3').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#3').toggle 'show'
+            $('#seed4').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#4').toggle 'show'
+            $('#seed5').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#5').toggle 'show'
+            $('#seed6').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#6').toggle 'show'
+            $('#seed7').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#7').toggle 'show'
+            $('#seed8').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#8').toggle 'show'
+            $('#seed9').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#9').toggle 'show'
+            $('#seed10').click ->
+                $('.seedtext').toggle 'hide'
+                $('.seedtext#10').toggle 'show'
+
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
@@ -117,70 +149,35 @@
                     %mpath{"xlink:href" => "#theMotionPath"}
 
 
-
-    .grass
+    %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
-    
+        %div.imgscroll
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed1" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed2" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed3" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed4"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed5"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed6"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed7"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed8" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed9" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed10"
+            
+            // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
+        %div.seedtext#1 The way get started is to quit talking and begin doing
+        %div.seedtext#2 The pessimist sees difficulty in every opportunity. The optimist sees the opportunity in every difficulty
+        %div.seedtext#3 Don’t let yesterday take up too much of today
+        %div.seedtext#4 You learn more from failure than from success. Don’t let it stop you. Failure builds character
+        %div.seedtext#5 It’s not whether you get knocked down, it’s whether you get up
+        %div.seedtext#6 If you are working on something that you really care about, you don’t have to be pushed. The vision pulls you
+        %div.seedtext#7 People who are crazy enough to think they can change the world, are the ones who do
+        %div.seedtext#8 Failure will never overtake me if my determination to succeed is strong enough
+        %div.seedtext#9 Entrepreneurs are great at dealing with uncertainty and also very good at minimizing risk. That’s the classic entrepreneur
+        %div.seedtext#10 We may encounter many defeats but we must not be defeated
+
     
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 = render :partial => "application/back_to_root"
-
-// old PaperJS code
-// Utility.paperSetup "paperCanvas" 
-
-// window.t = new paper.Tool
-
-// # bottom bar specs
-// bottom_bar_height = 200
-
-// # seed specs
-// seed_x_pos = paper.view.center.x
-// seed_y_pos = paper.view.center.y * 2
-// seed_radius = 10
-// seed_color = "#00A8E1"
-
-// c = new paper.Path.Circle
-//   radius: seed_radius
-//   fillColor: seed_color
-  
-//   position: new Point(seed_x_pos, seed_y_pos - bottom_bar_height)
-
-// t.onMouseDown = (event) ->
-//   tl_corner = event.point
-  
-//   console.log(tl_corner.y)
-
-//   # makeRectangle(tl_corner)
-//   mysize = new Size(30,30)
-//   createBranches(tl_corner, mysize, 90)
-
-// # helper methods
-// makeRectangle = (tl_corner) ->
-//   myColor = Color.random()
-//   mysize = 30
-//   newRect = Path.Rectangle(tl_corner, mysize)
-  
-//   newRect.fillColor = myColor
-
-// createBranches = (starting_pt, size, angle)->
-//   # angle = angle from horizon
-//   # a = width of change; b = height
-//   # LHS = (x - a, y - b); RHS = (x + a, y - b)
-  
-//   a = size * Math.cos angle
-//   b = size * Math.sin angle
-  
-//   console.log("a")
-//   newLeftPoint = new Point(starting_pt.x - size.width, starting_pt.y - size.height)
-//   newRightPoint = new Point(starting_pt.x + size.width, starting_pt.y - size.height)
-  
-  
-  
-//   leftPath = new Path.Line(starting_pt, newLeftPoint)
-//   leftPath.strokeColor = "black"
-//   rightPath = new Path.Line(starting_pt, newRightPoint)
-//   rightPath.strokeColor = "black"
-
 
 :scss
     #canvas{
@@ -221,9 +218,32 @@
         z-index: 100;
     }
     .grass{
-        position: absolute;
-        bottom: 0px;
+        position: relative;
+        bottom: 15%;
         z-index: 51;
+        // overflow: hidden;
+        
+        .imgscroll{
+           position: absolute;
+           bottom: 20%;
+           overflow: auto;
+           z-index: 9999;
+           white-space: nowrap;
+        }
+        
+        .seedtext{
+            position: absolute;
+            top: -50%;
+            left: 5%;
+            background: lighten(lightgray, 30%);
+            width: 90%;
+            height: 50%;
+        }
+        
+        .seed{
+            width: 17%;
+            height: 17%;
+        }
     }
     #Layer_1 {
         position: absolute;
@@ -239,3 +259,26 @@
     #seed{
         z-index: 50;
     }
+    
+    // Seed pulse animation
+    @keyframes pulse {
+        0% {
+            transform: scale(1, 1);
+        } 50% {
+            transform: scale(1.1, 1.1);
+        } 100% {
+            transform: scale(1, 1);
+        };
+    }
+    
+    #seed {
+    	animation: pulse 1s linear infinite;
+    }
+    
+    // #seed:hover {
+    // 	animation :none;
+    // }
+    
+    // #seed:hover .seedtext {
+    // 	visibility: visible;
+    // }
