@@ -377,7 +377,6 @@
                       position: new google.maps.LatLng(plant_lat, plant_long)
                       type: 'parking'
                     })
-<<<<<<< HEAD
                   if window.seed == false
                     console.log "this is the plant_lat"
                     window.features.forEach (feature) ->
@@ -390,7 +389,6 @@
                         position: feature.position
                         icon: image
                         map: map)
-                      marker.addListener('click', toggleBounce)
                       marker.addListener 'click', ->
                         window.seed_window.open map, marker
                         window.seed_window.show = true
@@ -402,7 +400,6 @@
                         console.log("add listener for message window")
                       console.log "added a marker at location: " + feature.position
                       window.seed = marker
-=======
                   console.log "this is the plant_lat"
                   window.features.forEach (feature) ->
                     image = 
@@ -421,8 +418,6 @@
                       window.seed_window.open map, marker
                       console.log("add listener for message window")
                     console.log "added a marker at location: " + feature.position
-
->>>>>>> parent of 6ab2a4f... local changes
                   return 
                 error: (response_data) ->
                   console.log "the call is failing"
