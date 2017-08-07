@@ -1,44 +1,133 @@
+:coffeescript
+  $ ->
+    input = document.querySelector("input")
+    console.log input
+    #input = $("input" )
+    input.style.opacity = 0
+
+%div.title  Today, at a cafe near you, a seed was planted
+.container
+  %form{:action => ""}
+    .embed-submit-field
+      %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed...", :rows => "4"}
+      %button{:type => "submit"} Plant Me!
+    %label{:for => "image_uploads"}
+      = image_tag "photo.png", :width=> "13%"
+      = image_tag "video.png", :width=> "15%"
+    %input#image_uploads{:accept => ".jpg, .jpeg, .png", :multiple => "multiple", :name => "image_uploads", :type => "file"}/
+
+
+
+:scss
+  body {
+    background: url("https://preview.c9users.io/samyuktaraman/final-project/littlethings/app/assets/images/trees.png");
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  .title{
+    width: 35%;
+    font-size:20px;
+    margin: 0 auto;
+    margin-top: 60px;
+    text-align: center;  
+  }
+  
+  //Begin template
+
+
+  * {
+    box-sizing: inherit;
+  }
+
+  .container {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 60px;
+  }
+
+  .embed-submit-field {
+    position: relative;
+    
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 15px;
+      border:2px solid #768c21;
+      border-color: #768c21;
+      background: #f0f4c3;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      
+    }
+    button {
+      position: absolute;
+      right: 0px;
+      bottom: 3px;
+      border-top-left-radius: 2em;
+      border: 2px solid #768c21;
+      margin-bottom: 2px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      
+      background: #9cb733;
+      padding: 10px;
+      
+      transition: all .2s;
+      
+      &:active {
+        background-color: #499115;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+
+  
+  
 // #container
 //     #top-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_next)
 //     #bottom-half=link_to image_tag("#{@image}"), v1_home_path(:image => @image_before)
 // // IGNORE, BUT KEEP THIS LINE (Back button)   
 // = render :partial => "application/back_to_root"
 
-!!!
-%html
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    :css
-      input[type=text] {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          box-sizing: border-box;
-          border: none;
-          background-color: #3CBC8D;
-          color: white;
-      }
-  %body
-    %form
-      %h2  Today, at a cafe near you a seed was planted
-      %input#fname{:name => "fname", :type => "text",}/
-.row 
-  .col-xs-3
-    = image_tag "text png.png", :width=> "17%", :id=>"system-img"
-    = image_tag "music png.png", :width=> "17%", :id=>"system-img"
-    = image_tag "camera png.png", :width=> "20%", :id=>"system-img"
-    = image_tag "paintbrush-png-13.png", :width=> "17%", :id=>"system-img"
+// !!!
+// %html
+//   %head
+//     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+//     :css
+//       input[type=text] {
+//           width: 100%;
+//           padding: 12px 20px;
+//           margin: 8px 0;
+//           box-sizing: border-box;
+//           border: none;
+//           background-color: #3CBC8D;
+//           color: white;
+//       }
+//   %body
+//     %form
+//       %h2  Today, at a cafe near you a seed was planted
+//       %input#fname{:name => "fname", :type => "text",}/
+// .row 
+//   .col-xs-3
+//     = image_tag "text png.png", :width=> "17%", :id=>"system-img"
+//     = image_tag "music png.png", :width=> "17%", :id=>"system-img"
+//     = image_tag "camera png.png", :width=> "20%", :id=>"system-img"
+//     = image_tag "paintbrush-png-13.png", :width=> "17%", :id=>"system-img"
     
-:scss
+// :scss
 
-  #system-img:hover {
-    width: 23%;
-  }
+//   #system-img:hover {
+//     width: 23%;
+//   }
   
-  h2 {
-    font-family: garamond;
-    font-style: italic;
-  }
+//   h2 {
+//     font-family: garamond;
+//     font-style: italic;
+//   }
 
 // //Begin template
 // body {
