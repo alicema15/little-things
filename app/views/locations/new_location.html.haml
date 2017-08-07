@@ -1,0 +1,21 @@
+.panel.panel-default.panel-form
+  .panel-heading
+    %h4 Add a Location
+  .panel-body
+    = form_for @location, :url => location_create_path(id: @location.id)  do |f|
+      %p Title: 
+      = f.text_field :name
+      %br/
+      %p Latitude: 
+      = f.text_field :latitude
+      %br/
+      %p Longitude: 
+      = f.text_field :longitude
+      %br/
+      = f.submit "Add Location"
+
+.panel.panel-default.panel-form
+  .panel-heading
+    %h4 Add Your Current Location
+  .panel-body
+    = button_to
