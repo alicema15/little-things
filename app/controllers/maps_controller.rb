@@ -29,6 +29,7 @@ class MapsController < ApplicationController
     if distance < 50
       @lat = location.latitude
       @long = location.longitude
+      @png = Plant.Images.sample
     else
       @lat = ""
       @long = ""
