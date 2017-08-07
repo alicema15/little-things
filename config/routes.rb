@@ -49,6 +49,10 @@ Rails.application.routes.draw do
   get 'branches' => 'branches#home', :as => "branches"
   get 'map' => 'maps#home', :as => "map"
   get 'home' => 'homepage#home', :as => "home"
+  post 'map/nearby' => 'maps#check_nearby', :as => "check_nearby"
+  
+  get 'map/add_location' => 'locations#new_location', :as => "location_new"
+  post 'map/add_location' => 'locations#create_location', :as => "location_create"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
