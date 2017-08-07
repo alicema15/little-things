@@ -334,23 +334,26 @@
                 dataType: 'script'
                 success: (response_data) ->
                   console.log "you got an ajax call working!"
-                  window.features.push(
+                  window.features = Array(
                     {
                       position: new google.maps.LatLng(plant_lat, plant_long)
                       type: 'parking'
                     })
                   console.log "this is the plant_lat"
                   window.features.forEach (feature) ->
+                    image = 
+                      url: "http://developer.helpscout.net/seed/images/seed.png"
+                      scaledSize: new google.maps.Size(60, 60)
+                      origin: new google.maps.Point(0, 0)
+                      anchor: new google.maps.Point(0, 0)
                     marker = new (google.maps.Marker)(
                       position: feature.position
-                      icon: icons[feature.type].icon
+                      icon: image
                       map: map)
                     marker.addListener('click', toggleBounce)
-                    console.log("added a marker")
                   return 
                 error: (response_data) ->
                   console.log "the call is failing"
-                  console.log response_data
                   return
               false
               return
