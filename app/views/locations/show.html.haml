@@ -1,0 +1,16 @@
+.container-fluid
+	= button_to 'Add Location', location_new_path, {:method => 'get', :class => 'btn btn-sm btn-success'}
+	%h3 Current Locations
+	.table-responsive-vertical.shadow-z-1
+		%table#table.table.table-striped.table-mc-light-blue
+			%thead
+				%tr
+					%th Name
+					%th Latitude
+					%th Longitude
+			%tbody
+				- @locations.each do |location|
+					%tr
+						%td= location.name
+						%td= location.latitude
+						%td= location.longitude
