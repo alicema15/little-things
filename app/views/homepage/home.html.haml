@@ -27,6 +27,7 @@
           window.location = data.goto
     $('#to-map').hide()
     $('#new-location').hide()
+    $('#plant-image').hide()
     if navigator.geolocation
       f = ->
         options = 
@@ -53,9 +54,13 @@
                 console.log "This is plant_lat: " + plant_lat
                 if isNaN(plant_lat) == true
                   $('#new-location').show()
+                  $('#location-status').text = "You're not near a seedbed"
                   console.log plant_pic
                 else
                   $('#to-map').show()
+                  $('#plant-image').show()
+                  $('#plant-image').attr("src", new_plant_type)
+                  $('#location-status').text = "You're near a seedbed!"
                   console.log "Should be setting the location status"
                   document.getElementById('location-status').innerHTML = "You are near a seed!"
                 return 
@@ -101,15 +106,10 @@
       = image_tag "audio.png", :width=> "25%"
     %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file"}/
 .container.text-center.seed-alert
-  %h2#location-status You're not near a seed
+  %h2#location-status Finding Your Location
   .btn.btn-lg.btn-default#new-location Add a Location
   .btn.btn-lg.btn-success#to-map Plant My Seed
-  %h3#seed-id-announcement This is the seed type of the plant existing here:
-  %h4#seed-id
-  %h4#location-id
-  %h4#seed-type
-  %h3 This is the seed type of my new seed:
-  %h4#new-seed-type
+  %image#plant-image
 
 
 
@@ -150,6 +150,11 @@
   
   .seed-alert {
     margin-top: 0px;
+  }
+  
+  #plant-image{
+    height: 100px;
+    width: 100px;
   }
 
   .embed-submit-field {
