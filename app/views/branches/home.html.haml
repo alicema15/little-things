@@ -138,15 +138,13 @@
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
     .button-container
-        .button.clear Clear Screen
         .button.grow Grow Tree
-        .button.drop Drop Seed
-    %svg#Layer_1{:space => "preserve", :style => "enable-background:new 0 0 231.8 266.4;", :version => "1.1", :viewbox => "new 0 0 231.8 266.4", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
-        %path#theMotionPath{:d => d="M0,66.3c0,0,167.8-227,199.6,200.1", :fill => "none"}
-        %svg{:xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
-            %image{:height => "20px", :href => "http://www.clker.com/cliparts/D/p/H/E/2/n/apple-seed-hi.png", :width => "40px", :x => "0", :y => "0"}
-                %animatemotion{:dur => "1.5s", :repeatcount => 1}
-                    %mpath{"xlink:href" => "#theMotionPath"}
+    // %svg#Layer_1{:space => "preserve", :style => "enable-background:new 0 0 231.8 266.4;", :version => "1.1", :viewbox => "new 0 0 231.8 266.4", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
+    //     %path#theMotionPath{:d => d="M0,66.3c0,0,167.8-227,199.6,200.1", :fill => "none"}
+    //     %svg{:xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
+    //         %image{:height => "20px", :href => "http://www.clker.com/cliparts/D/p/H/E/2/n/apple-seed-hi.png", :width => "40px", :x => "0", :y => "0"}
+    //             %animatemotion{:dur => "1.5s", :repeatcount => 1}
+    //                 %mpath{"xlink:href" => "#theMotionPath"}
 
 
     %div.grass
@@ -190,14 +188,7 @@
     .container-fluid {
         min-height: 100%;
         padding: 0px;
-        background : -moz-linear-gradient(50.3% 68.44% 90.52deg,rgba(135, 213, 244, 1) 0%,rgba(106, 179, 247, 1) 100%);
-        background : -webkit-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        background : -webkit-gradient(linear,50.3% 68.44% ,49.68% 29.71% ,color-stop(0,rgba(135, 213, 244, 1) ),color-stop(1,rgba(106, 179, 247, 1) ));
-        background : -o-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        background : -ms-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4', endColorstr='#6AB3F7' ,GradientType=0)";
-        background : linear-gradient(-0.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4',endColorstr='#6AB3F7' , GradientType=1);
+        background: linear-gradient(#68b0f1, #85d3f3);
         z-index: 0;
     }
     .button-container{
@@ -237,7 +228,13 @@
             left: 5%;
             background: lighten(lightgray, 30%);
             width: 90%;
-            height: 50%;
+            height: 65%;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            -webkit-box-shadow:0 0 10px blue; 
+            -moz-box-shadow: 0 0 10px blue; 
+            box-shadow:0 0 10px blue;
         }
         
         .seed{
