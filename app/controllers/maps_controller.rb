@@ -20,6 +20,7 @@ class MapsController < ApplicationController
   end
   
   def check_nearby
+    
     my_lat = params[:my_lat].to_f
     my_long = params[:my_long].to_f
     nearest_plant = Location.nearby_planting?(my_lat, my_long)

@@ -55,6 +55,10 @@ Rails.application.routes.draw do
   get 'map/add_location' => 'locations#new_location', :as => "location_new"
   patch 'map/add_location' => 'locations#create_location', :as => "location_create"
   get 'map/locations' => 'locations#show', :as => "show_location"
+  delete 'map/locations' => 'locations#destroy', :as => "destroy_location"
+  post 'map/create_location_here' => 'locations#create_location_here', :as => "create_location_here"
+  post 'map/edit_location' => 'locations#update', :as => "update_location"
+
   
   get 'map/add_plant' => 'plants#new', :as => "plant_new"
   post 'map/add_plant' => 'plants#create', :as => "plant_create"

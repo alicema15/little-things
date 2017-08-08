@@ -5,8 +5,29 @@
     #input = $("input" )
     input.style.opacity = 0
   $ ->
-    window.features = new Array
-    window.seed = false
+    $('#to-map').click ()->
+      $.ajax
+        method: "POST"
+        url: "/home/add_seed"
+        data: 
+          location_id: plant_location_id
+          plant_type: new_plant_type
+        success: (data)->
+          console.log "SUCCESS", data
+          window.location = data.goto
+    $('#new-location').click () ->
+      $.ajax
+        method: "POST"
+        url: "/map/create_location_here"
+        data: 
+          longitude: window.position.lng
+          latitude: window.position.lat
+        success: (data)->
+          console.log "SUCCESS", data
+          window.location = data.goto
+    $('#to-map').hide()
+    $('#new-location').hide()
+    $('#plant-image').hide()
     if navigator.geolocation
       f = ->
         options = 
@@ -19,7 +40,7 @@
           pos = 
             lat: position.coords.latitude
             lng: position.coords.longitude
-
+          window.position = pos
           Plant = getNearby: ->
             console.log "you're about to make an ajax call"
             $.ajax
@@ -31,16 +52,20 @@
               success: (response_data) ->
                 console.log "you got an ajax call working!"
                 console.log "This is plant_lat: " + plant_lat
-                if plant_lat == ''
+                if isNaN(plant_lat) == true
+                  $('#new-location').show()
+                  $('#location-status').text = "You're not near a seedbed"
                   console.log plant_pic
-                  window.seed = null
-                  window.seed = false
                 else
+                  $('#to-map').show()
+                  $('#plant-image').show()
+                  $('#plant-image').attr("src", new_plant_type)
+                  $('#location-status').text = "You're near a seedbed!"
                   console.log "Should be setting the location status"
                   document.getElementById('location-status').innerHTML = "You are near a seed!"
                 return 
               error: (response_data) ->
-                console.log "the call is failing"
+                console.log "the call is failing", data
                 return
             false
             return
@@ -80,16 +105,11 @@
       = image_tag "vid.png", :width=> "25%"
       = image_tag "audio.png", :width=> "25%"
     %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file"}/
-.container.text-center
-  %h2#location-status You're not near a seed
-  .btn.btn-lg.btn-info#to-map Plant My Seed
-  %h3 This is the seed type of the plant existing here:
-  %h4#seed-id
-  %h4#location-id
-  %h4#seed-type
-  %h3 This is the seed type of my new seed:
-  %h4#new-seed-type= @seed_type
-  %button#plant-seed= button_to "seeeeeds" , plant_seed_path(:location_id => @location_id), {:method => 'post', :class => 'btn btn-sm btn-info'}
+.container.text-center.seed-alert
+  %h2#location-status Finding Your Location
+  .btn.btn-lg.btn-default#new-location Add a Location
+  .btn.btn-lg.btn-success#to-map Plant My Seed
+  %image#plant-image
 
 
 
@@ -127,13 +147,22 @@
     margin: 0 auto;
     margin-top: 60px;
   }
+  
+  .seed-alert {
+    margin-top: 0px;
+  }
+  
+  #plant-image{
+    height: 100px;
+    width: 100px;
+  }
 
   .embed-submit-field {
     position: relative;
     
     textarea {
       width: 100%;
-      height: 200px;
+      height: 150px;
       padding: 15px;
       border:2px solid #768c21;
       border-color: #768c21;

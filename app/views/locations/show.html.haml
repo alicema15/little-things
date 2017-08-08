@@ -12,15 +12,20 @@
 			%table#table.table.table-striped.table-mc-light-blue
 				%thead
 					%tr
+						%th ID
 						%th Name
 						%th Latitude
 						%th Longitude
+						%th Delete
 				%tbody
 					- @locations.each do |location|
 						%tr
+							%td= location.id
 							%td= location.name
 							%td= location.latitude
 							%td= location.longitude
+							%td= button_to 'Delete Location', destroy_location_path(:id => location.id), {:method => 'delete', :class => 'btn btn-sm btn-danger'}
+							
 		%h3 Current Plants
 		.table-responsive-vertical.shadow-z-1
 			%table#table.table.table-striped.table-mc-light-blue
