@@ -102,37 +102,28 @@
                 CURRHEIGHT = 5
             return
 
+
+
         $(document).ready ->
-            $('#seed1').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#1').toggle 'show'
-            $('#seed2').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#2').toggle 'show'          
-            $('#seed3').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#3').toggle 'show'
-            $('#seed4').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#4').toggle 'show'
-            $('#seed5').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#5').toggle 'show'
-            $('#seed6').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#6').toggle 'show'
-            $('#seed7').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#7').toggle 'show'
-            $('#seed8').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#8').toggle 'show'
-            $('#seed9').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#9').toggle 'show'
-            $('#seed10').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#10').toggle 'show'
+            $('.seedtext').hide()
+            $('.emptyseedconfirmation').hide()
+            $('.seed').click ()->
+                id = $(this).attr("name")
+                seedtext = $(".seedtext#"+ id)
+                seed = $('#seed' + id)
+                seedtext.show()
+                seed.addClass("active").addClass("visited")
+                seedtext.siblings(".seedtext")
+                    .hide().removeClass("active")
+                $('.emptyseedconfirmation').hide()
+                seed.siblings(".seed").removeClass("active")
+            $('#emptyseed').click ()->
+                $('.emptyseedconfirmation').show()
+                $('.seedtext').hide()
+                $('.seed').removeClass("active")
+                $('#emptyseed').addClass("active")
+            $('.emptyseedconfirmation').click ()->
+                window.location.href='/home'
 
 
 .container-fluid
@@ -150,16 +141,17 @@
     %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
         %div.imgscroll
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed1" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed2" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed3" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed4"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed5"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed6"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed7"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed8" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed9" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed10"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed1", :name => "1" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed2", :name => "2" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed3", :name => "3" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed4", :name => "4" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed5", :name => "5"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed6", :name => "6"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed7", :name => "7"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed8", :name => "8"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed9", :name => "9"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed10", :name => "10"
+            = image_tag "black_seed.png", :class=> "seed", :id=>"emptyseed", :name => "0"
             
             // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
         %div.seedtext#1 The way get started is to quit talking and begin doing
@@ -172,7 +164,8 @@
         %div.seedtext#8 Failure will never overtake me if my determination to succeed is strong enough
         %div.seedtext#9 Entrepreneurs are great at dealing with uncertainty and also very good at minimizing risk. That’s the classic entrepreneur
         %div.seedtext#10 We may encounter many defeats but we must not be defeated
-
+        %div.emptyseedconfirmation Click this to edit your message
+    
     
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 = render :partial => "application/back_to_root"
@@ -215,11 +208,11 @@
         // overflow: hidden;
         
         .imgscroll{
-           position: absolute;
-           bottom: 20%;
-           overflow: auto;
-           z-index: 9999;
-           white-space: nowrap;
+            position: absolute;
+            bottom: 20%;
+            overflow: auto;
+            z-index: 9999;
+            white-space: nowrap;
         }
         
         .seedtext{
@@ -237,11 +230,49 @@
             box-shadow:0 0 10px blue;
         }
         
+        .emptyseedconfirmation{
+            position:absolute;
+            top: -30%;
+            right: 5%;
+            background: lighten(lightgray, 30%);
+            width: 30%;
+            height: 45%;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            -webkit-box-shadow:0 0 10px blue; 
+            -moz-box-shadow: 0 0 10px blue; 
+            box-shadow:0 0 10px blue;
+            z-index: 99999;
+        }
+        
         .seed{
             width: 17%;
             height: 17%;
         }
+        
+        #emptyseed{
+            width: 14%;
+            height: 14%;
+        }
     }
+    
+    .active{
+        // border-radius: 5px !important;
+        // -webkit-box-shadow:0 0 10px blue !important; 
+        // -moz-box-shadow: 0 0 10px blue !important; 
+        // box-shadow:0 0 10px blue !important;
+        width: 25% !important;
+        height: 25% !important;
+        bottom: 10% !important;
+        // width: 500px;
+        // height: 500px;
+    }
+    
+    .visited{
+        animation: none !important;
+    }
+
     #Layer_1 {
         position: absolute;
         bottom: 100px;
@@ -268,9 +299,14 @@
         };
     }
     
-    #seed {
+    .seed {
     	animation: pulse 1s linear infinite;
     }
+    
+    // if clicked, add a class
+    // .addClass -> drop shadow, different colors
+    // opacity indicates link is being disabled
+    // add glow for the one that's selected -- desaturated blue glow
     
     // #seed:hover {
     // 	animation :none;
