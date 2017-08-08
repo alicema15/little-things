@@ -50,10 +50,16 @@ Rails.application.routes.draw do
   get 'map' => 'maps#home', :as => "map"
   get 'home' => 'homepage#home', :as => "home"
   post 'map/nearby' => 'maps#check_nearby', :as => "check_nearby"
+  post 'home/nearby' => 'homepage#check_nearby', :as => "check_nearby_on_home"
 
   get 'map/add_location' => 'locations#new_location', :as => "location_new"
   patch 'map/add_location' => 'locations#create_location', :as => "location_create"
   get 'map/locations' => 'locations#show', :as => "show_location"
+  
+  get 'map/add_plant' => 'plants#new', :as => "plant_new"
+  post 'map/add_plant' => 'plants#create', :as => "plant_create"
+  post '/home/add_seed' => 'plants#create_by_planting', :as => "plant_seed"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

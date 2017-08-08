@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
     
-    belongs_to :seed
+    belongs_to :plant
 
 end

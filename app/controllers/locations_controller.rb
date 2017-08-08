@@ -15,6 +15,7 @@ class LocationsController < ApplicationController
     
     def show
         @locations = Location.all
+        @plants = Plant.all
     end
     
     private

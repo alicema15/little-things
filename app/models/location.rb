@@ -2,6 +2,14 @@ class Location < ActiveRecord::Base
   include Math
   has_many :plants
   
+  def self.All_Ids
+    array = []
+    self.all.each do |location|
+      array.push(location.id)
+    end
+    array
+  end
+  
   def self.nearby_planting?(lat, long)
     closest = 50
     plant = nil

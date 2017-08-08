@@ -6,6 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+error_location = Location.create
+error_location.name = "Error Location"
+error_location.save
 
 jacobs = Location.create
 jacobs.latitude = 37.876094
@@ -55,3 +58,8 @@ alice.latitude = 37.865126
 alice.longitude = -122.257159
 alice.name = "Alice's House"
 alice.save
+
+plant = Plant.create
+plant.location = alice
+plant.plant_pic = 'happy_seed.png'
+plant.save

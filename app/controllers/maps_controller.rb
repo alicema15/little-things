@@ -27,9 +27,15 @@ class MapsController < ApplicationController
     location = nearest_plant[1]
 
     if distance < 50
+      @location = location
+      @plant = location.plants.last
       @lat = location.latitude
       @long = location.longitude
-      @png = Plant.Images.sample
+      if location.plants.empty?
+        @png = 'x.png'
+      else
+        @png = location.plants.last.plant_pic
+      end
     else
       @lat = ""
       @long = ""
