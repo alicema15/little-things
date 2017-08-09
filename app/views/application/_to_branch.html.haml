@@ -1,0 +1,9 @@
+:scss
+    #branch-button{
+        position: absolute;
+        z-index: 100;
+        top: 15px;
+        left: 180px;
+    }
+    
+= button_to "Go to Branches", branches_path(:location_id => @location_id), {:method => 'get', id: "branch-button", :class => 'btn btn-sm btn-success'}
