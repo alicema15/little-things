@@ -1,9 +1,7 @@
 var plant_lat = parseFloat('<%= @lat %>');
 var plant_long = parseFloat('<%= @long %>');
 var plant_pic = ('<%= @png %>');
+var plant_location_id = ('<%= @location_id %>');
 console.log("at least I did something");
-
-document.getElementById('seed-type').innerHTML = ('<%= @plant.plant_pic %>');
-document.getElementById('location-id').innerHTML = ('<%= @plant.location.id %>');
-document.getElementById('seed-id').innerHTML = ('<%= @plant.id %>');
+var new_plant_type =  ('<%= @seed_type %>');
 

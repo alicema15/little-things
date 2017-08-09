@@ -10,6 +10,11 @@ error_location = Location.create
 error_location.name = "Error Location"
 error_location.save
 
+error_plant = Plant.create
+error_plant.plant_pic = "There's no plant here!"
+error_plant.location = error_location
+error_plant.save
+
 jacobs = Location.create
 jacobs.latitude = 37.876094
 jacobs.longitude = -122.258851

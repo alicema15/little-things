@@ -15,11 +15,15 @@ class HomepageController < ApplicationController
     nearest_plant = Location.nearby_planting?(my_lat, my_long)
     distance = nearest_plant[0]
     location = nearest_plant[1]
-
     if distance < 50
       @location = location
-      @plant = location.plants.last
-      @location_id = @plant.location.id
+      if location.plants.empty?
+        @plant = Plant.all.first
+      else
+        @plant = location.plants.last
+      end
+      @location_id = @location.id
+      @seed_type = Plant.Images.sample
       @lat = location.latitude
       @long = location.longitude
       if location.plants.empty?
@@ -28,6 +32,7 @@ class HomepageController < ApplicationController
         @png = location.plants.last.plant_pic
       end
     else
+      @plant = Plant.all.first
       @lat = ""
       @long = ""
       @png = ""
