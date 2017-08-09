@@ -15,6 +15,16 @@
         success: (data)->
           console.log "SUCCESS", data
           window.location = data.goto
+    $('#to-trees').click ()->
+      $.ajax
+        method: "get"
+        url: "/branches/" + plant_location_id + "/seeds"
+        data: 
+          location_id: plant_location_id
+        success: (data)->
+          console.log "SUCCESS", data
+          console.log "this is my goto: " + data.goto
+          window.location = data.goto
     $('#new-location').click () ->
       $.ajax
         method: "POST"
@@ -28,6 +38,7 @@
     $('#to-map').hide()
     $('#new-location').hide()
     $('#plant-image').hide()
+    $('#to-trees').hide()
     if navigator.geolocation
       f = ->
         options = 
@@ -58,6 +69,7 @@
                   console.log plant_pic
                 else
                   $('#to-map').show()
+                  $('#to-trees').show()
                   $('#plant-image').show()
                   $('#plant-image').attr("src", new_plant_type)
                   $('#location-status').text = "You're near a seedbed!"
@@ -109,6 +121,7 @@
   %h2#location-status Finding Your Location
   .btn.btn-lg.btn-default#new-location Add a Location
   .btn.btn-lg.btn-success#to-map Plant My Seed
+  .btn.btn-lg.btn-default#to-trees View All Seeds
   %image#plant-image
 
 

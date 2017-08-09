@@ -17,7 +17,7 @@ class PlantsController < ApplicationController
         @plant = Plant.create()
         @plant.location = Location.find_by_id(params[:location_id])
         @plant.plant_pic = params[:plant_type]
-        render :json => {params: params, goto: map_path, success: @plant.save}
+        render :json => {params: params, goto: map_path(:location_id => @plant.location.id), success: @plant.save}
     end
     
     def show
