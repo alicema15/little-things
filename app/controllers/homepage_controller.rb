@@ -2,6 +2,11 @@ class HomepageController < ApplicationController
    
    def home
       @seed_type = Plant.Images.sample
+      if session[:plant_id] == nil
+        plant = Plant.create()
+        session[:plant_id] = plant.id
+      end
+      @plant_id = session[:plant_id]
       # when you come back to home view, you should pass into the params a plant_id
       # this will help render the proper image, text, or soundbyte back to the home view
       # if params[:plant_id]
@@ -43,7 +48,10 @@ class HomepageController < ApplicationController
   end
   
   def save_seed
-      message = Message.create()
+    plant = Plant.find_by_id(session[:plant_id])
+    m = plant.messages.build(:text => params[:comment])
+    m.save!
+    redirect_to home_path
     puts("YOU HAVE SUCCESSFULLY SAVED YOUR SEED :)")
   end 
 
