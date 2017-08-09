@@ -1,9 +1,9 @@
 :scss
     #home-button{
         position: absolute;
-        z-index: 100;
+        z-index: 200;
         top: 15px;
         left: 15px;
     }
     
-= button_to "Edit My Seed", home_path, {:method => 'get', id: "home-button", :class => 'btn btn-sm'}
+= button_to "Edit My Seed", home_path, {:method => 'get', id: "home-button", :class => 'btn btn-sm btn-primary'}

@@ -60,5 +60,6 @@ gem 'twilio-ruby', '~> 5.0.0.rc26'
 
 #MAPS
 gem 'geocoder'
+gem "mechanize"
 
 

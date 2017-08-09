@@ -7,10 +7,8 @@ class Plant < ActiveRecord::Base
     def self.Images
         return [
             'happy_seed.png',
-            'orange.png',
             'flower.png',
             'banana.png',
-            'pear.png',
             'jalapeno.png',
             'pepper.png',
             'broccoli.png',

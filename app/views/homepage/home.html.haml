@@ -1,13 +1,11 @@
 :coffeescript
   $ ->
     input = document.querySelector("input")
-    console.log input
     #input = $("input" )
     input.style.opacity = 0
   $ ->
     $('#save-seed-form').submit ()->
       valuesToSubmit = $(this).serialize()
-      console.log "valuesToSubmit: " + valuesToSubmit
       $.ajax
         method: "POST"
         url: "/home/save_seed"
@@ -15,7 +13,10 @@
         dataType: 'json'
         success: (response_data) ->
           console.log "You successfully have an ajax call to save seed", response_data
+          $('#system-status').text("Saved your seed")
+          $('#current-message').text("Current Message: " + valuesToSubmit.comment)
         error: (response_data) ->
+          $('#system-status').text("Error saving seed, try again")
           console.log "You have failed an ajax call to save seed", response_data
     $('#to-map').click ()->
       $.ajax
@@ -26,7 +27,10 @@
           plant_type: new_plant_type
         success: (data)->
           console.log "SUCCESS", data
-          window.location = data.goto
+          if data.plant_success == true
+            window.location = data.goto
+          else
+            $('#system-status').text("You can't plant a seed without a message!")
     $('#to-trees').click ()->
       $.ajax
         method: "get"
@@ -87,7 +91,7 @@
                   $('#plant-image').attr("src", new_plant_type)
                   $('#location-status').text = "You're near a seedbed!"
                   console.log "Should be setting the location status"
-                  document.getElementById('location-status').innerHTML = "You are near a seed!"
+                  document.getElementById('location-status').innerHTML = "You are near a seedbed!"
                 return 
               error: (response_data) ->
                 console.log "the call is failing", data
@@ -120,26 +124,30 @@
       return
 
 %div.title  Today, at a cafe near you, a seed was planted
+.container.text-center.seed-alert
+  %h2#location-status Finding Your Location
+  .btn.btn-md.btn-default#new-location Add a Location
 .container
   = form_tag save_seed_path, {:id => "save-seed-form", :remote => true, :method => :post} do
     .embed-submit-field
       - if session[:plant_id]
-        %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed", :rows => "4"}
+        %textarea{:cols => "50", :name => "comment", :placeholder => "Fill your seed with a memento", :rows => "4", :value => @curr_message}
         -# match if ends with png
         -# match if ends with mp3/mp4 
         -# then render inside of placeholder
-      %button{:type => "submit", :id => "save-seed"} Plant Me!
+      %button{:type => "submit", :id => "save-seed"} Save Message!
     %label{:for => "image_uploads"}
       = image_tag "pic.png", :width=> "25%"
       = image_tag "vid.png", :width=> "25%"
       = image_tag "audio.png", :width=> "25%"
-    %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file"}/
-.container.text-center.seed-alert
-  %h2#location-status Finding Your Location
-  .btn.btn-md.btn-default#new-location Add a Location
+    #system-status
+    #current-message= "Current Message: " + @curr_message
+    // %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file"}/
+.container
+  %image.seed#plant-image
   .btn.btn-md.btn-success#to-map Plant My Seed
   .btn.btn-md.btn-default#to-trees View All Seeds
-  %image#plant-image
+
 
 
 
@@ -223,6 +231,20 @@
     }
   }
 
+  // Seed pulse animation
+  @keyframes pulse {
+      0% {
+          transform: scale(1, 1);
+      } 50% {
+          transform: scale(1.1, 1.1);
+      } 100% {
+          transform: scale(1, 1);
+      };
+  }
+
+  .seed {
+  	animation: pulse 1s linear infinite;
+  }
   
   
 // #container

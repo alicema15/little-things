@@ -20,10 +20,18 @@ class PlantsController < ApplicationController
         else
             @plant = plant
         end
-        session[:plant_id] = nil
-        @plant.location = Location.find_by_id(params[:location_id])
-        @plant.plant_pic = params[:plant_type]
-        render :json => {params: params, goto: map_path(:location_id => @plant.location.id), success: @plant.save}
+        if !Message.where(plant_id: @plant.id).empty? && Message.where(plant_id: @plant.id).last.text != ""
+            session[:plant_id] = nil
+            @plant.location = Location.find_by_id(params[:location_id])
+            if params[:plant_type].nil?
+                @plant.plant_pic = Plant.Images.sample
+            else
+                @plant.plant_pic = params[:plant_type]
+            end
+            render :json => {params: params, plant_success: true, goto: map_path(:location_id => @plant.location.id), success: @plant.save}
+        else
+            render :json => {params: params, plant_success: false, success: @plant.save}
+        end
     end
     
     def show
