@@ -91,6 +91,7 @@
         ctx.transform 1, 0, sx, 1, -h * sx, 0
         ctx.globalAlpha = 0.2
         ctx.globalCompositeOperation = 'destination-over'
+        window.gesture = null
 
         $('.clear').on 'click', clearCanvas
         $('.grow').click ->
@@ -163,6 +164,7 @@
         beginning_b = []
         
         window.addEventListener 'deviceorientation', (event) ->
+            previous_motion = window.gesture
             console.log "something happening"
         
             beta = event.beta
@@ -175,23 +177,24 @@
             if average_beta.length > 2
                 average_beta.shift()
 
-            tilt = 30
+            tilt = 20
         
-            if average_beta[0] - beginning_b[0] > tilt
+            diff = average_beta[0] - beginning_b[0]
+            if diff > tilt || diff < -tilt
+                window.gesture = "Pitch"
                 seedtochange = $("#seed3")
                 bigger = seedtochange.width() * 1.1
                 $("#gesture").html("PITCH++")
     
-                window.setTimeout (->
-                    random_message()
-                    # seedtochange.width(bigger)
-                    return
-                ), 1000
+                
             else
+                window.gesture = null
                 $("#gesture").html("GESTURE")
                 #smaller = seedtochange.width() / 1.1
                 #$("#seed3").width(smaller)
-
+        
+            if window.gesture && previous_motion != window.gesture
+                random_message()
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
