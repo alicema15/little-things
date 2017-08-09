@@ -1,21 +1,156 @@
 :coffeescript
   $ ->
     input = document.querySelector("input")
-    console.log input
     #input = $("input" )
     input.style.opacity = 0
+  $ ->
+    $('#save-seed-form').submit ()->
+      valuesToSubmit = $(this).serialize()
+      $.ajax
+        method: "POST"
+        url: "/home/save_seed"
+        data: valuesToSubmit
+        dataType: 'json'
+        success: (response_data) ->
+          console.log "You successfully have an ajax call to save seed", response_data
+          $('#system-status').text("Saved your seed")
+          $('#current-message').text("Current Message: " + valuesToSubmit.comment)
+        error: (response_data) ->
+          $('#system-status').text("Error saving seed, try again")
+          console.log "You have failed an ajax call to save seed", response_data
+    $('#to-map').click ()->
+      $.ajax
+        method: "POST"
+        url: "/home/add_seed"
+        data: 
+          location_id: plant_location_id
+          plant_type: new_plant_type
+        success: (data)->
+          console.log "SUCCESS", data
+          if data.plant_success == true
+            window.location = data.goto
+          else
+            $('#system-status').text("You can't plant a seed without a message!")
+    $('#to-trees').click ()->
+      $.ajax
+        method: "get"
+        url: "/branches/" + plant_location_id + "/seeds"
+        data: 
+          location_id: plant_location_id
+        success: (data)->
+          console.log "SUCCESS", data
+          console.log "this is my goto: " + data.goto
+          window.location = data.goto
+    $('#new-location').click () ->
+      $.ajax
+        method: "POST"
+        url: "/map/create_location_here"
+        data: 
+          longitude: window.position.lng
+          latitude: window.position.lat
+        success: (data)->
+          console.log "SUCCESS", data
+          window.location = data.goto
+    $('#to-map').hide()
+    $('#new-location').hide()
+    $('#plant-image').hide()
+    $('#to-trees').hide()
+    if navigator.geolocation
+      f = ->
+        options = 
+          enableHighAccuracy: true
+          timeout: 5000
+          maximumAge: 0
+          desiredAccuracy: 0
+          frequency: 1
+        onSuccess = (position) ->
+          pos = 
+            lat: position.coords.latitude
+            lng: position.coords.longitude
+          window.position = pos
+          $('#location-status').text = "Location has been found"
+          Plant = getNearby: ->
+            console.log "you're about to make an ajax call"
+            $.ajax
+              type: 'POST'
+              url: '/home/nearby'
+              data: JSON.stringify({ 'my_lat' : position.coords.latitude, 'my_long': position.coords.longitude })
+              contentType: 'application/json'
+              dataType: 'script'
+              success: (response_data) ->
+                console.log "you got an ajax call working!"
+                console.log "This is plant_lat: " + plant_lat
+                if isNaN(plant_lat) == true
+                  $('#new-location').show()
+                  $('#location-status').text = "You're not near a seedbed"
+                  console.log plant_pic
+                else
+                  $('#to-map').show()
+                  $('#to-trees').show()
+                  $('#plant-image').show()
+                  $('#plant-image').attr("src", new_plant_type)
+                  $('#location-status').text = "You're near a seedbed!"
+                  console.log "Should be setting the location status"
+                  document.getElementById('location-status').innerHTML = "You are near a seedbed!"
+                return 
+              error: (response_data) ->
+                console.log "the call is failing", data
+                return
+            false
+            return
+                
+          plant = new Plant.getNearby()  
+            
+        onError = (error) ->
+          alert 'code: ' + error.code + '\n' + 'message: ' + error.message + '\n'
+          return
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options)
+        return
+      location = new f
+    else
+      # Browser doesn't support Geolocation
+      handleLocationError false, infoWindow, map.getCenter()
+    return
+  
+    handleLocationError = (browserHasGeolocation, infoWindow, pos) ->
+      infoWindow.setPosition pos
+      infoWindow.setContent if browserHasGeolocation then 'Error: The Geolocation service failed.' else 'Error: Your browser doesn\'t support geolocation.'
+      infoWindow.open map
+          
+    $(window).load ->
+      my_lat = parseFloat($('#lat').val());
+      my_lng = parseFloat($('#lng').val());
+      map = new initMap(my_lat, my_lng)
+      return
 
 %div.title  Today, at a cafe near you, a seed was planted
+.container.text-center.seed-alert
+  %h2#location-status Finding Your Location
+  .btn.btn-md.btn-default#new-location Add a Location
 .container
-  %form{:action => ""}
+  = form_tag save_seed_path, {:id => "save-seed-form", :remote => true, :method => :post} do
     .embed-submit-field
-      %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed...", :rows => "4"}
-      %button{:type => "submit"} Plant Me!
+      - if session[:plant_id]
+        %textarea{:cols => "50", :name => "comment", :placeholder => "Fill your seed with a memento", :rows => "4", :value => @curr_message}
+        -# match if ends with png
+        -# match if ends with mp3/mp4 
+        -# then render inside of placeholder
+      %button{:type => "submit", :id => "save-seed"} Save Message!
     %label{:for => "image_uploads"}
       = image_tag "pic.png", :width=> "25%"
       = image_tag "vid.png", :width=> "25%"
       = image_tag "audio.png", :width=> "25%"
     %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file"}/
+    #system-status
+    #current-message= "Current Message: " + @curr_message
+    // %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file"}/
+.container
+  %image.seed#plant-image
+  .btn.btn-md.btn-success#to-map Plant My Seed
+  .btn.btn-md.btn-default#to-trees View All Seeds
+
+
+
 
 :scss
   body {
@@ -51,13 +186,22 @@
     margin: 0 auto;
     margin-top: 60px;
   }
+  
+  .seed-alert {
+    margin-top: 0px;
+  }
+  
+  #plant-image{
+    height: 100px;
+    width: 100px;
+  }
 
   .embed-submit-field {
     position: relative;
     
     textarea {
       width: 100%;
-      height: 200px;
+      height: 150px;
       padding: 15px;
       border:2px solid #768c21;
       border-color: #768c21;
@@ -88,6 +232,20 @@
     }
   }
 
+  // Seed pulse animation
+  @keyframes pulse {
+      0% {
+          transform: scale(1, 1);
+      } 50% {
+          transform: scale(1.1, 1.1);
+      } 100% {
+          transform: scale(1, 1);
+      };
+  }
+
+  .seed {
+  	animation: pulse 1s linear infinite;
+  }
   
   
 // #container

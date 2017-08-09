@@ -2,9 +2,17 @@ class Location < ActiveRecord::Base
   include Math
   has_many :plants
   
+  def self.All_Ids
+    array = []
+    self.all.each do |location|
+      array.push(location.id)
+    end
+    array
+  end
+  
   def self.nearby_planting?(lat, long)
     closest = 50
-    plant = nil
+    location = nil
     self.all.each do |place|
       start = []
       start.push(lat)
@@ -15,10 +23,10 @@ class Location < ActiveRecord::Base
       dist = self.distance(start, destination)
       if dist < closest
         closest = dist
-        plant = place
+        location = place
       end
     end
-    return Array[closest, plant]
+    return Array[closest, location]
   end
 
   def self.distance(loc1, loc2)

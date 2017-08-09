@@ -11,23 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170805210415) do
+ActiveRecord::Schema.define(version: 20170809043640) do
 
   create_table "locations", force: :cascade do |t|
-    t.float  "longitude"
-    t.float  "latitude"
+    t.float  "longitude", default: 0.0
+    t.float  "latitude",  default: 0.0
     t.string "name"
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "messages"
-    t.string "message_title"
+    t.string  "messages"
+    t.string  "message_title"
+    t.string  "text",          default: ""
+    t.integer "plant_id"
   end
 
   create_table "plants", force: :cascade do |t|
     t.string  "type"
     t.integer "user_id"
-    t.integer "location_id"
+    t.integer "location_id", default: 1
+    t.string  "plant_pic",   default: ""
   end
 
   create_table "users", force: :cascade do |t|

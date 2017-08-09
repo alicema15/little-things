@@ -1,0 +1,10 @@
+:scss
+    #location-button{
+        position: absolute;
+        z-index: 100;
+        top: 15px;
+        left: 100px;
+    }
+    
+
+= button_to "Locations", show_location_path, {:method => 'get', id: "location-button", :class => 'btn btn-sm btn-info'}

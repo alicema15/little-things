@@ -46,14 +46,30 @@ Rails.application.routes.draw do
   end
 
   get 'vignette' => 'application#vignette', :as => "vignette"
-  get 'branches' => 'branches#home', :as => "branches"
+  
+  get 'branches/:location_id' => 'branches#home', :as => "branches"
+  get 'branches/:location_id/seeds' => 'branches#seeds', :as => "branches_seeds"
+  
   get 'map' => 'maps#home', :as => "map"
   get 'home' => 'homepage#home', :as => "home"
   post 'map/nearby' => 'maps#check_nearby', :as => "check_nearby"
+  post 'home/nearby' => 'homepage#check_nearby', :as => "check_nearby_on_home"
 
   get 'map/add_location' => 'locations#new_location', :as => "location_new"
   patch 'map/add_location' => 'locations#create_location', :as => "location_create"
   get 'map/locations' => 'locations#show', :as => "show_location"
+  delete 'map/locations' => 'locations#destroy', :as => "destroy_location"
+  post 'map/create_location_here' => 'locations#create_location_here', :as => "create_location_here"
+  post 'map/edit_location' => 'locations#update', :as => "update_location"
+
+  
+  get 'map/add_plant' => 'plants#new', :as => "plant_new"
+  post 'map/add_plant' => 'plants#create', :as => "plant_create"
+  post '/home/add_seed' => 'plants#create_by_planting', :as => "plant_seed"
+  delete 'locations/delete_seed' => 'plants#destroy', :as => "plant_destroy"
+  
+  post '/home/save_seed' => 'homepage#save_seed', :as => "save_seed"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

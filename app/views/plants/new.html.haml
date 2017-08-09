@@ -1,0 +1,10 @@
+
+%h2 Add a plant          
+.phase-change-select
+  = form_for :edit_plant, :url => plant_create_path(:action => 'post') do |f|
+    .row.form-group
+      = f.select :plant_pic, options_for_select(@plant_pics), id: 'plant_pic', class: 'form-control inline-block select'
+    .row.form-group      
+      = f.select :location_id, options_for_select(@locations), id: 'plant_pic', class: 'form-control inline-block select'
+      .button-phase
+        = f.submit 'Add Plant', :class => 'btn btn-sm btn-primary'
