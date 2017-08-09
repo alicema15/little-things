@@ -102,8 +102,6 @@
                 CURRHEIGHT = 5
             return
 
-
-
         $(document).ready ->
             $('.seedtext').hide()
             $('.emptyseedconfirmation').hide()
@@ -125,6 +123,75 @@
             $('.emptyseedconfirmation').click ()->
                 window.location.href='/home'
 
+            #$(document).click () ->
+            #    random_message()
+
+        last_n_averages = (n, x, buffer) ->
+            i = undefined
+            sum_x = undefined
+            average_x = x
+            buffer.push x
+            sum_x = 0
+            i = 0
+            while i < buffer.length
+              sum_x += buffer[i]
+              i++
+            average_x = sum_x / buffer.length
+            if buffer.length > n
+                buffer.shift()
+            average_x
+        
+        random_message = ->
+            seedid = (Math.random() * 10).toFixed() # change to number of seeds, not 10
+            $("#gesture").html(seedid)
+            console.log "another random message"
+            seed = $("#seed" + seedid)
+            seedtext = $(".seedtext#" + seedid)
+            
+            seedtext.show()
+            seed.addClass("active")
+            seedtext.siblings(".seedtext")
+                .hide().removeClass("active")
+            $('.emptyseedconfirmation').hide()
+            seed.siblings(".seed").removeClass("active")
+
+            
+        n = 10
+        buffer_beta = []
+        average_beta = []
+
+        beginning_b = []
+        
+        window.addEventListener 'deviceorientation', (event) ->
+            console.log "something happening"
+        
+            beta = event.beta
+            b = last_n_averages(n, beta, buffer_beta).toFixed()
+            if beginning_b.length == 0
+                beginning_b.push(beta)
+                
+            $(".testing").html("b: " + b + " beginning_b: " + beginning_b)
+            average_beta.push b
+            if average_beta.length > 2
+                average_beta.shift()
+
+            tilt = 30
+        
+            if average_beta[0] - beginning_b[0] > tilt
+                seedtochange = $("#seed3")
+                bigger = seedtochange.width() * 1.1
+                $("#gesture").html("PITCH++")
+    
+                window.setTimeout (->
+                    random_message()
+                    # seedtochange.width(bigger)
+                    return
+                ), 1000
+            else
+                $("#gesture").html("GESTURE")
+                #smaller = seedtochange.width() / 1.1
+                #$("#seed3").width(smaller)
+
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
@@ -137,6 +204,8 @@
     //             %animatemotion{:dur => "1.5s", :repeatcount => 1}
     //                 %mpath{"xlink:href" => "#theMotionPath"}
 
+    %div#gesture GESTURE
+    %div.testing ASGDAGAD
 
     %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
