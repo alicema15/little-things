@@ -399,13 +399,19 @@
                           position: feature.position
                           icon: image
                           map: map)
+                        marker.setAnimation google.maps.Animation.BOUNCE
                         marker.addListener 'click', ->
-                          window.seed_window.open map, marker
-                          window.seed_window.show = true
+                          -#window.seed_window.open map, marker
+                          -#window.seed_window.show = true
                           if this.getAnimation() != null
                             this.setAnimation null
+                            window.seed_window.open map, marker
+                            infoWindow.close map
+                            
                           else
                             this.setAnimation google.maps.Animation.BOUNCE
+                            window.seed_window.close map, marker
+                            infoWindow.open map
                           return
                           console.log("add listener for message window")
                         console.log "added a marker at location: " + feature.position
@@ -459,6 +465,8 @@
 
 %body
   = render :partial => "application/to_home"
+  = render :partial => "application/to_branch"
+
   = render :partial => "application/locations"
   #map
   %script{:defer => "defer", :src => @customized_map}
