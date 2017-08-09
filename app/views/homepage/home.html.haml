@@ -5,6 +5,18 @@
     #input = $("input" )
     input.style.opacity = 0
   $ ->
+    $('#save-seed-form').submit ()->
+      valuesToSubmit = $(this).serialize()
+      console.log "valuesToSubmit: " + valuesToSubmit
+      $.ajax
+        method: "POST"
+        url: "/home/save_seed"
+        data: valuesToSubmit
+        dataType: 'json'
+        success: (response_data) ->
+          console.log "You successfully have an ajax call to save seed", response_data
+        error: (response_data) ->
+          console.log "You have failed an ajax call to save seed", response_data
     $('#to-map').click ()->
       $.ajax
         method: "POST"
@@ -52,6 +64,7 @@
             lat: position.coords.latitude
             lng: position.coords.longitude
           window.position = pos
+          $('#location-status').text = "Location has been found"
           Plant = getNearby: ->
             console.log "you're about to make an ajax call"
             $.ajax
@@ -108,16 +121,14 @@
 
 %div.title  Today, at a cafe near you, a seed was planted
 .container
-  = form_tag save_seed_path, :method => :post do
+  = form_tag save_seed_path, {:id => "save-seed-form", :remote => true, :method => :post} do
     .embed-submit-field
-      - if @plant
+      - if session[:plant_id]
         %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed", :rows => "4"}
         -# match if ends with png
         -# match if ends with mp3/mp4 
         -# then render inside of placeholder
-      - else
-        %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed...", :rows => "4"}
-      %button{:type => "submit"} Plant Me!
+      %button{:type => "submit", :id => "save-seed"} Plant Me!
     %label{:for => "image_uploads"}
       = image_tag "pic.png", :width=> "25%"
       = image_tag "vid.png", :width=> "25%"

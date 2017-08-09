@@ -3,7 +3,8 @@ class HomepageController < ApplicationController
    def home
       @seed_type = Plant.Images.sample
       if session[:plant_id] == nil
-        plant = Plant.create()
+        plant = Plant.create
+        plant.save
         session[:plant_id] = plant.id
       end
       @plant_id = session[:plant_id]
@@ -49,9 +50,14 @@ class HomepageController < ApplicationController
   
   def save_seed
     plant = Plant.find_by_id(session[:plant_id])
-    m = plant.messages.build(:text => params[:comment])
+    if Message.where(plant_id: plant.id).empty?
+      m = plant.messages.build(:text => params[:comment])
+    else
+      m = plant.messages.last
+      m.text = params[:comment]
+    end
     m.save!
-    redirect_to home_path
+    render :json => {params: params, goto: map_path(:location_id => plant.location.id), success: plant.save}
     puts("YOU HAVE SUCCESSFULLY SAVED YOUR SEED :)")
   end 
 

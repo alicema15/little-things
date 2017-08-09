@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   get 'map/add_plant' => 'plants#new', :as => "plant_new"
   post 'map/add_plant' => 'plants#create', :as => "plant_create"
   post '/home/add_seed' => 'plants#create_by_planting', :as => "plant_seed"
+  delete 'locations/delete_seed' => 'plants#destroy', :as => "plant_destroy"
   
   post '/home/save_seed' => 'homepage#save_seed', :as => "save_seed"
 

@@ -27,6 +27,7 @@ class LocationsController < ApplicationController
         end
         @locations = Location.all
         @plants = Plant.all
+        @messages = Message.all
     end
 
     def destroy

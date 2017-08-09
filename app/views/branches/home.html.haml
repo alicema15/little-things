@@ -144,6 +144,9 @@
             - @plants.each do |plant|
                 = image_tag plant.plant_pic, :class=> "seed", :id => "seed#{plant.id}", :name => "#{plant.id}"
                 // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
+        -@plants.each do |plant|
+            - if !plant.messages.empty?
+                %div{:class => "seedtext", :id => "#{plant.id}", :style => {display: 'none'}}= plant.messages.last.text
         %div.seedtext#1 The way get started is to quit talking and begin doing
         %div.seedtext#2 The pessimist sees difficulty in every opportunity. The optimist sees the opportunity in every difficulty
         %div.seedtext#3 Don’t let yesterday take up too much of today
