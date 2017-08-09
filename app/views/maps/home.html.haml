@@ -368,7 +368,7 @@
               console.log "you're about to make an ajax call"
               $.ajax
                 type: 'POST'
-                url: 'https://littlethings-alicema15.c9users.io/map/nearby'
+                url: '/map/nearby'
                 data: JSON.stringify({ 'my_lat' : position.coords.latitude, 'my_long': position.coords.longitude })
                 contentType: 'application/json'
                 dataType: 'script'
@@ -460,7 +460,6 @@
 %body
   = render :partial => "application/to_home"
   = render :partial => "application/locations"
-  = render :partial => "application/to_branch"
   #map
   %script{:defer => "defer", :src => @customized_map}
 
