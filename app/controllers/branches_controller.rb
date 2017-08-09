@@ -1,6 +1,7 @@
 class BranchesController < ApplicationController
    
   def home
+    
     @location = Location.find_by_id(params[:location_id])
     @plants = @location.plants
   end
