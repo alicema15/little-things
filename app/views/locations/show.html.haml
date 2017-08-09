@@ -1,0 +1,46 @@
+= render :partial => "application/back_to_root"
+= render :partial => "application/locations"
+.container-fluid
+	.row
+		.col-sm-6.text-center.inline
+			= button_to 'Add Location', location_new_path, {:method => 'get', :class => 'btn btn-sm btn-success'}
+			= button_to 'Add Plant', plant_new_path, {:method => 'get', :class => 'btn btn-sm btn-info'}
+			= button_to 'Go to Map', map_path, {:method => 'get', :class => 'btn btn-sm btn-default'}
+	.row
+		%h3 Current Locations
+		.table-responsive-vertical.shadow-z-1
+			%table#table.table.table-striped.table-mc-light-blue
+				%thead
+					%tr
+						%th ID
+						%th Name
+						%th Latitude
+						%th Longitude
+						%th Delete
+				%tbody
+					- @locations.each do |location|
+						%tr
+							%td= location.id
+							%td= location.name
+							%td= location.latitude
+							%td= location.longitude
+							%td= button_to 'Delete Location', destroy_location_path(:id => location.id), {:method => 'delete', :class => 'btn btn-sm btn-danger'}
+							
+		%h3 Current Plants
+		.table-responsive-vertical.shadow-z-1
+			%table#table.table.table-striped.table-mc-light-blue
+				%thead
+					%tr
+						%th Plant_pic
+						%th Location name
+						%th Location Longitude
+						%th Location Latitude
+						
+				%tbody
+					- @plants.each do |plant|
+						- if !plant.nil? && !plant.location.nil?
+							%tr
+								%td= plant.plant_pic
+								%td= plant.location.name
+								%td= plant.location.longitude
+								%td= plant.location.latitude

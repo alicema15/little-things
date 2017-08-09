@@ -20,6 +20,7 @@ class MapsController < ApplicationController
   end
   
   def check_nearby
+    
     my_lat = params[:my_lat].to_f
     my_long = params[:my_long].to_f
     nearest_plant = Location.nearby_planting?(my_lat, my_long)
@@ -27,11 +28,19 @@ class MapsController < ApplicationController
     location = nearest_plant[1]
 
     if distance < 50
+      @location = location
+      @plant = location.plants.last
       @lat = location.latitude
       @long = location.longitude
+      if location.plants.empty?
+        @png = 'x.png'
+      else
+        @png = location.plants.last.plant_pic
+      end
     else
       @lat = ""
       @long = ""
+      @png = ""
     end
     respond_to do |format|
       format.js

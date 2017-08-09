@@ -91,6 +91,7 @@
         ctx.transform 1, 0, sx, 1, -h * sx, 0
         ctx.globalAlpha = 0.2
         ctx.globalCompositeOperation = 'destination-over'
+        window.gesture = null
 
         $('.clear').on 'click', clearCanvas
         $('.grow').click ->
@@ -102,85 +103,144 @@
                 CURRHEIGHT = 5
             return
 
+        $(document).ready ->
+            $('.seedtext').hide()
+            $('.emptyseedconfirmation').hide()
+            $('.seed').click ()->
+                id = $(this).attr("name")
+                seedtext = $(".seedtext#"+ id)
+                seed = $('#seed' + id)
+                seedtext.show()
+                seed.addClass("active").addClass("visited")
+                seedtext.siblings(".seedtext")
+                    .hide().removeClass("active")
+                $('.emptyseedconfirmation').hide()
+                seed.siblings(".seed").removeClass("active")
+            $('#emptyseed').click ()->
+                $('.emptyseedconfirmation').show()
+                $('.seedtext').hide()
+                $('.seed').removeClass("active")
+                $('#emptyseed').addClass("active")
+            $('.emptyseedconfirmation').click ()->
+                window.location.href='/home'
+
+            #$(document).click () ->
+            #    random_message()
+
+        last_n_averages = (n, x, buffer) ->
+            i = undefined
+            sum_x = undefined
+            average_x = x
+            buffer.push x
+            sum_x = 0
+            i = 0
+            while i < buffer.length
+              sum_x += buffer[i]
+              i++
+            average_x = sum_x / buffer.length
+            if buffer.length > n
+                buffer.shift()
+            average_x
+        
+        random_message = ->
+            seedid = (Math.random() * 10).toFixed() # change to number of seeds, not 10
+            $("#gesture").html(seedid)
+            console.log "another random message"
+            seed = $("#seed" + seedid)
+            seedtext = $(".seedtext#" + seedid)
+            
+            seedtext.show()
+            seed.addClass("active")
+            seedtext.siblings(".seedtext")
+                .hide().removeClass("active")
+            $('.emptyseedconfirmation').hide()
+            seed.siblings(".seed").removeClass("active")
+
+            
+        n = 10
+        buffer_beta = []
+        average_beta = []
+
+        beginning_b = []
+        
+        window.addEventListener 'deviceorientation', (event) ->
+            previous_motion = window.gesture
+            console.log "something happening"
+        
+            beta = event.beta
+            b = last_n_averages(n, beta, buffer_beta).toFixed()
+            if beginning_b.length == 0
+                beginning_b.push(beta)
+                
+            $(".testing").html("b: " + b + " beginning_b: " + beginning_b)
+            average_beta.push b
+            if average_beta.length > 2
+                average_beta.shift()
+
+            tilt = 20
+        
+            diff = average_beta[0] - beginning_b[0]
+            if diff > tilt || diff < -tilt
+                window.gesture = "Pitch"
+                seedtochange = $("#seed3")
+                bigger = seedtochange.width() * 1.1
+                $("#gesture").html("PITCH++")
+    
+                
+            else
+                window.gesture = null
+                $("#gesture").html("GESTURE")
+                #smaller = seedtochange.width() / 1.1
+                #$("#seed3").width(smaller)
+        
+            if window.gesture && previous_motion != window.gesture
+                random_message()
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
     .button-container
-        .button.clear Clear Screen
         .button.grow Grow Tree
-        .button.drop Drop Seed
-    %svg#Layer_1{:space => "preserve", :style => "enable-background:new 0 0 231.8 266.4;", :version => "1.1", :viewbox => "new 0 0 231.8 266.4", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
-        %path#theMotionPath{:d => d="M0,66.3c0,0,167.8-227,199.6,200.1", :fill => "none"}
-        %svg{:xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
-            %image{:height => "20px", :href => "http://www.clker.com/cliparts/D/p/H/E/2/n/apple-seed-hi.png", :width => "40px", :x => "0", :y => "0"}
-                %animatemotion{:dur => "1.5s", :repeatcount => 1}
-                    %mpath{"xlink:href" => "#theMotionPath"}
+    // %svg#Layer_1{:space => "preserve", :style => "enable-background:new 0 0 231.8 266.4;", :version => "1.1", :viewbox => "new 0 0 231.8 266.4", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
+    //     %path#theMotionPath{:d => d="M0,66.3c0,0,167.8-227,199.6,200.1", :fill => "none"}
+    //     %svg{:xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
+    //         %image{:height => "20px", :href => "http://www.clker.com/cliparts/D/p/H/E/2/n/apple-seed-hi.png", :width => "40px", :x => "0", :y => "0"}
+    //             %animatemotion{:dur => "1.5s", :repeatcount => 1}
+    //                 %mpath{"xlink:href" => "#theMotionPath"}
 
+    %div#gesture GESTURE
+    %div.testing ASGDAGAD
 
-
-    .grass
+    %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
+        %div.imgscroll
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed1", :name => "1" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed2", :name => "2" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed3", :name => "3" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed4", :name => "4" 
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed5", :name => "5"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed6", :name => "6"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed7", :name => "7"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed8", :name => "8"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed9", :name => "9"
+            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed10", :name => "10"
+            = image_tag "black_seed.png", :class=> "seed", :id=>"emptyseed", :name => "0"
+            
+            // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
+        %div.seedtext#1 The way get started is to quit talking and begin doing
+        %div.seedtext#2 The pessimist sees difficulty in every opportunity. The optimist sees the opportunity in every difficulty
+        %div.seedtext#3 Don’t let yesterday take up too much of today
+        %div.seedtext#4 You learn more from failure than from success. Don’t let it stop you. Failure builds character
+        %div.seedtext#5 It’s not whether you get knocked down, it’s whether you get up
+        %div.seedtext#6 If you are working on something that you really care about, you don’t have to be pushed. The vision pulls you
+        %div.seedtext#7 People who are crazy enough to think they can change the world, are the ones who do
+        %div.seedtext#8 Failure will never overtake me if my determination to succeed is strong enough
+        %div.seedtext#9 Entrepreneurs are great at dealing with uncertainty and also very good at minimizing risk. That’s the classic entrepreneur
+        %div.seedtext#10 We may encounter many defeats but we must not be defeated
+        %div.emptyseedconfirmation Click this to edit your message
     
     
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 = render :partial => "application/back_to_root"
-
-// old PaperJS code
-// Utility.paperSetup "paperCanvas" 
-
-// window.t = new paper.Tool
-
-// # bottom bar specs
-// bottom_bar_height = 200
-
-// # seed specs
-// seed_x_pos = paper.view.center.x
-// seed_y_pos = paper.view.center.y * 2
-// seed_radius = 10
-// seed_color = "#00A8E1"
-
-// c = new paper.Path.Circle
-//   radius: seed_radius
-//   fillColor: seed_color
-  
-//   position: new Point(seed_x_pos, seed_y_pos - bottom_bar_height)
-
-// t.onMouseDown = (event) ->
-//   tl_corner = event.point
-  
-//   console.log(tl_corner.y)
-
-//   # makeRectangle(tl_corner)
-//   mysize = new Size(30,30)
-//   createBranches(tl_corner, mysize, 90)
-
-// # helper methods
-// makeRectangle = (tl_corner) ->
-//   myColor = Color.random()
-//   mysize = 30
-//   newRect = Path.Rectangle(tl_corner, mysize)
-  
-//   newRect.fillColor = myColor
-
-// createBranches = (starting_pt, size, angle)->
-//   # angle = angle from horizon
-//   # a = width of change; b = height
-//   # LHS = (x - a, y - b); RHS = (x + a, y - b)
-  
-//   a = size * Math.cos angle
-//   b = size * Math.sin angle
-  
-//   console.log("a")
-//   newLeftPoint = new Point(starting_pt.x - size.width, starting_pt.y - size.height)
-//   newRightPoint = new Point(starting_pt.x + size.width, starting_pt.y - size.height)
-  
-  
-  
-//   leftPath = new Path.Line(starting_pt, newLeftPoint)
-//   leftPath.strokeColor = "black"
-//   rightPath = new Path.Line(starting_pt, newRightPoint)
-//   rightPath.strokeColor = "black"
-
 
 :scss
     #canvas{
@@ -193,14 +253,7 @@
     .container-fluid {
         min-height: 100%;
         padding: 0px;
-        background : -moz-linear-gradient(50.3% 68.44% 90.52deg,rgba(135, 213, 244, 1) 0%,rgba(106, 179, 247, 1) 100%);
-        background : -webkit-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        background : -webkit-gradient(linear,50.3% 68.44% ,49.68% 29.71% ,color-stop(0,rgba(135, 213, 244, 1) ),color-stop(1,rgba(106, 179, 247, 1) ));
-        background : -o-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        background : -ms-linear-gradient(90.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4', endColorstr='#6AB3F7' ,GradientType=0)";
-        background : linear-gradient(-0.52deg, rgba(135, 213, 244, 1) 0%, rgba(106, 179, 247, 1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#87D5F4',endColorstr='#6AB3F7' , GradientType=1);
+        background: linear-gradient(#68b0f1, #85d3f3);
         z-index: 0;
     }
     .button-container{
@@ -221,10 +274,77 @@
         z-index: 100;
     }
     .grass{
-        position: absolute;
-        bottom: 0px;
+        position: relative;
+        bottom: 15%;
         z-index: 51;
+        // overflow: hidden;
+        
+        .imgscroll{
+            position: absolute;
+            bottom: 20%;
+            overflow: auto;
+            z-index: 9999;
+            white-space: nowrap;
+        }
+        
+        .seedtext{
+            position: absolute;
+            top: -50%;
+            left: 5%;
+            background: lighten(lightgray, 30%);
+            width: 90%;
+            height: 65%;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            -webkit-box-shadow:0 0 10px blue; 
+            -moz-box-shadow: 0 0 10px blue; 
+            box-shadow:0 0 10px blue;
+        }
+        
+        .emptyseedconfirmation{
+            position:absolute;
+            top: -30%;
+            right: 5%;
+            background: lighten(lightgray, 30%);
+            width: 30%;
+            height: 45%;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            -webkit-box-shadow:0 0 10px blue; 
+            -moz-box-shadow: 0 0 10px blue; 
+            box-shadow:0 0 10px blue;
+            z-index: 99999;
+        }
+        
+        .seed{
+            width: 17%;
+            height: 17%;
+        }
+        
+        #emptyseed{
+            width: 14%;
+            height: 14%;
+        }
     }
+    
+    .active{
+        // border-radius: 5px !important;
+        // -webkit-box-shadow:0 0 10px blue !important; 
+        // -moz-box-shadow: 0 0 10px blue !important; 
+        // box-shadow:0 0 10px blue !important;
+        width: 25% !important;
+        height: 25% !important;
+        bottom: 10% !important;
+        // width: 500px;
+        // height: 500px;
+    }
+    
+    .visited{
+        animation: none !important;
+    }
+
     #Layer_1 {
         position: absolute;
         bottom: 100px;
@@ -239,3 +359,31 @@
     #seed{
         z-index: 50;
     }
+    
+    // Seed pulse animation
+    @keyframes pulse {
+        0% {
+            transform: scale(1, 1);
+        } 50% {
+            transform: scale(1.1, 1.1);
+        } 100% {
+            transform: scale(1, 1);
+        };
+    }
+    
+    .seed {
+    	animation: pulse 1s linear infinite;
+    }
+    
+    // if clicked, add a class
+    // .addClass -> drop shadow, different colors
+    // opacity indicates link is being disabled
+    // add glow for the one that's selected -- desaturated blue glow
+    
+    // #seed:hover {
+    // 	animation :none;
+    // }
+    
+    // #seed:hover .seedtext {
+    // 	visibility: visible;
+    // }
