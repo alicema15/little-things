@@ -10,6 +10,8 @@ class MapsController < ApplicationController
     
     @customized_map = Map.customized_google_map(center)
     
+    @location_id = params[:location_id]
+    
   end
   
   def get_nearest_plant
