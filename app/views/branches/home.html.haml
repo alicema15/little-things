@@ -106,6 +106,7 @@
         $(document).ready ->
             $('.seedtext').hide()
             $('.emptyseedconfirmation').hide()
+            $('.alert.alert-success').hide()
             $('.seed').click ()->
                 id = $(this).attr("name")
                 seedtext = $(".seedtext#"+ id)
@@ -156,45 +157,74 @@
             $('.emptyseedconfirmation').hide()
             seed.siblings(".seed").removeClass("active")
 
-            
-        n = 10
-        buffer_beta = []
-        average_beta = []
 
+        n = 10
+
+        buffer_beta = []
+        buffer_gamma = []
+        average_beta = []
+        average_gamma = []
+        
         beginning_b = []
+        beginning_g = []
+
+        tilt = 20
         
         window.addEventListener 'deviceorientation', (event) ->
             previous_motion = window.gesture
             console.log "something happening"
         
             beta = event.beta
+            gamma = event.gamma
+
             b = last_n_averages(n, beta, buffer_beta).toFixed()
+            g = last_n_averages(n, gamma, buffer_gamma).toFixed()
             if beginning_b.length == 0
                 beginning_b.push(beta)
+            if beginning_g.length == 0
+                beginning_g.push(gamma)
                 
-            $(".testing").html("b: " + b + " beginning_b: " + beginning_b)
+            $(".testing").html("g: " + g + " beginning_g: " + beginning_g)
             average_beta.push b
+            average_gamma.push g
+
             if average_beta.length > 2
                 average_beta.shift()
+            if average_gamma.length > 2
+                average_gamma.shift()
 
-            tilt = 20
-        
-            diff = average_beta[0] - beginning_b[0]
-            if diff > tilt || diff < -tilt
+
+            diff_b = average_beta[0] - beginning_b[0]
+            diff_g = average_gamma[0] - beginning_g[0]
+
+
+            if diff_g > 60 || diff_g < -60
+                window.gesture = "Roll"
+                $("#gesture").html("ROLL++")
+            else if diff_b > tilt || diff_b < -tilt
                 window.gesture = "Pitch"
                 seedtochange = $("#seed3")
                 bigger = seedtochange.width() * 1.1
                 $("#gesture").html("PITCH++")
-    
-                
             else
                 window.gesture = null
                 $("#gesture").html("GESTURE")
                 #smaller = seedtochange.width() / 1.1
                 #$("#seed3").width(smaller)
         
-            if window.gesture && previous_motion != window.gesture
+            if window.gesture == "Roll" && previous_motion != window.gesture
+                $('.seed').hide()
+                $('.alert.alert-success').show()
+                $('.seedtext').hide()
+                $('.testing').hide()
+                $('#gestures').hide()
+                tilt = 500
+                
+            else if window.gesture == "Pitch" && previous_motion != window.gesture
                 random_message()
+
+        $('.button.grow').click () ->
+            $('.seedtext').hide()
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
@@ -231,12 +261,23 @@
         %div.seedtext#10 We may encounter many defeats but we must not be defeated
         %div.emptyseedconfirmation Click this to edit your message
 
-= render :partial => "application/to_home"
     
+        %div.alert.alert-success Seed was planted!
+    
+    
+= render :partial => "application/to_home"
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 = render :partial => "application/back_to_root"
 
 :scss
+
+    #gesture {
+        z-index: 9999999;
+    }
+    .testing {
+        z-index: 9999999;    
+    }
+
     #canvas{
         width: 100%;
         height: 100%;
@@ -244,17 +285,21 @@
         margin-top: 30px;
         z-index: -9999;
     }
+
     .container-fluid {
-        min-height: 100%;
+        min-height: 80%;
+        // height: 100%;
         padding: 0px;
         background: linear-gradient(#68b0f1, #85d3f3);
         z-index: 0;
     }
+
     .button-container{
         position: absolute;
         top: 60px;
         width: 100px;
     }
+
     .button{
         width: 100%;
         height:25px;
@@ -368,7 +413,15 @@
     .seed {
     	animation: pulse 1s linear infinite;
     }
-    
+
+    .alert.alert-success{
+        font-weight: bold;
+        position: absolute;
+        bottom: 10%;
+        left: 30%;
+    }
+
+
     // if clicked, add a class
     // .addClass -> drop shadow, different colors
     // opacity indicates link is being disabled
