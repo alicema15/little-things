@@ -243,19 +243,12 @@
     %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
         %div.imgscroll
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed1", :name => "1" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed2", :name => "2" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed3", :name => "3" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed4", :name => "4" 
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed5", :name => "5"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed6", :name => "6"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed7", :name => "7"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed8", :name => "8"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed9", :name => "9"
-            = image_tag "happy_seed.png", :class=> "seed", :id=>"seed10", :name => "10"
-            = image_tag "black_seed.png", :class=> "seed", :id=>"emptyseed", :name => "0"
-            
-            // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
+            - @plants.each do |plant|
+                = image_tag plant.plant_pic, :class=> "seed", :id => "seed#{plant.id}", :name => "#{plant.id}"
+                // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
+        -@plants.each do |plant|
+            - if !plant.messages.empty?
+                %div{:class => "seedtext", :id => "#{plant.id}", :style => {display: 'none'}}= plant.messages.last.text
         %div.seedtext#1 The way get started is to quit talking and begin doing
         %div.seedtext#2 The pessimist sees difficulty in every opportunity. The optimist sees the opportunity in every difficulty
         %div.seedtext#3 Don’t let yesterday take up too much of today
