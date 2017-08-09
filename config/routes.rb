@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   delete 'map/locations' => 'locations#destroy', :as => "destroy_location"
   post 'map/create_location_here' => 'locations#create_location_here', :as => "create_location_here"
   post 'map/edit_location' => 'locations#update', :as => "update_location"
+  get 'map/location_info' => 'maps#location_info', :as => "location_info"
 
   
   get 'map/add_plant' => 'plants#new', :as => "plant_new"

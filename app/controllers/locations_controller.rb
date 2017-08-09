@@ -45,6 +45,6 @@ class LocationsController < ApplicationController
     
     private
         def choice_params
-            params.require(:id).permit(:latitude, :longitude, :name)
+            params.require(:id).permit(:latitude, :longitude, :name, :location_id)
         end
 end

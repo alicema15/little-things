@@ -399,18 +399,37 @@
                           position: feature.position
                           icon: image
                           map: map)
+                        -#marker.metadata = {class: "plant"};
                         marker.setAnimation google.maps.Animation.BOUNCE
                         marker.addListener 'click', ->
                           -#window.seed_window.open map, marker
                           -#window.seed_window.show = true
                           if this.getAnimation() != null
                             this.setAnimation null
-                            window.seed_window.open map, marker
+                            -#window.seed_window.open map, marker
+                            window.seed_window.show = true
                             infoWindow.close map
-                            
+                            $.ajax
+                              url: 'map/location_info'
+                              method: 'get'
+                              data:
+                                location_id: plant_location_id
+                              success: (data) ->
+                                console.log "Passed the data into the controller to get a view for the marker", data
+                                new_content = contentString = "<div>" + "<a href=https://littlethings-alicema15.c9users.io" + data.goto + ">" + "</div>"
+                                console.log("printing new_content:" + new_content)
+                                -#window.seed_window = new (google.maps.InfoWindow)(content: new_content)
+                                -#window.seed_window.setContent(new_content)
+                                console.log(data.goto)
+                                window.seed_window.setContent('<p> hello there friend I like you quite a bit </p>')
+                                please_work = '<a href="https://littlethings-alicema15.c9users.io"' + data.goto + '> Go to Branches </a>'
+                                window.seed_window.setContent('<a href="https://littlethings-alicema15.c9users.io"' + data.goto + '> Go to Branches </a>')
+                                window.seed_window.open map, marker
+                                return
                           else
                             this.setAnimation google.maps.Animation.BOUNCE
                             window.seed_window.close map, marker
+                            window.seed_window.show = false
                             infoWindow.open map
                           return
                           console.log("add listener for message window")
