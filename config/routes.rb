@@ -59,6 +59,8 @@ Rails.application.routes.draw do
   get 'map/add_plant' => 'plants#new', :as => "plant_new"
   post 'map/add_plant' => 'plants#create', :as => "plant_create"
   post '/home/add_seed' => 'plants#create_by_planting', :as => "plant_seed"
+  
+  post '/home/save_seed' => 'homepage#save_seed', :as => "save_seed"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

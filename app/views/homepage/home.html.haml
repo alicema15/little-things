@@ -71,9 +71,15 @@
 
 %div.title  Today, at a cafe near you, a seed was planted
 .container
-  %form{:action => ""}
+  = form_tag save_seed_path, :method => :post do
     .embed-submit-field
-      %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed...", :rows => "4"}
+      - if @plant
+        %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed", :rows => "4"}
+        -# match if ends with png
+        -# match if ends with mp3/mp4 
+        -# then render inside of placeholder
+      - else
+        %textarea{:cols => "50", :name => "comment", :placeholder => "Plant a seed...", :rows => "4"}
       %button{:type => "submit"} Plant Me!
     %label{:for => "image_uploads"}
       = image_tag "pic.png", :width=> "25%"

@@ -2,6 +2,11 @@ class HomepageController < ApplicationController
    
    def home
       @seed_type = Plant.Images.sample
+      # when you come back to home view, you should pass into the params a plant_id
+      # this will help render the proper image, text, or soundbyte back to the home view
+      # if params[:plant_id]
+        # @plant = Plant.find(params[:plant_id].to_i)
+      # end
    end
    
   def check_nearby
@@ -31,6 +36,11 @@ class HomepageController < ApplicationController
       format.js
     end
   end
+  
+  def save_seed
+      message = Message.create()
+    puts("YOU HAVE SUCCESSFULLY SAVED YOUR SEED :)")
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.
