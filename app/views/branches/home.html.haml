@@ -104,6 +104,7 @@
             return
 
         $(document).ready ->
+            $('.alert.alert-danger').hide()
             $('.seedtext').hide()
             $('.emptyseedconfirmation').hide()
             $('.alert.alert-success').hide()
@@ -172,7 +173,7 @@
         
         window.addEventListener 'deviceorientation', (event) ->
             previous_motion = window.gesture
-            console.log "something happening"
+            console.log "something happening inside deviceorienation listener in banches home view"
         
             beta = event.beta
             gamma = event.gamma
@@ -211,13 +212,33 @@
                 $("#gesture").html("GESTURE")
                 #smaller = seedtochange.width() / 1.1
                 #$("#seed3").width(smaller)
-        
             if window.gesture == "Roll" && previous_motion != window.gesture
-                $('.seed').hide()
-                $('.alert.alert-success').show()
-                $('.seedtext').hide()
-                $('.testing').hide()
-                $('#gestures').hide()
+              url = window.location.pathname
+              plant_location_id = url.substring(url.lastIndexOf('/') + 1)
+              $.ajax
+                method: "POST"
+                url: "/home/add_seed"
+                data: 
+                  location_id: plant_location_id
+                success: (data)->
+                  console.log "SUCCESS", data
+                  if data.plant_success == true
+                    $('.seed').hide()
+                    $('.alert.alert-success').show()
+                    $('.seedtext').hide()
+                    $('.alert.alert-success').click ()->
+                      $('.seed').show()
+                      $('.alert.alert-success').hide()
+                  if data.plant_success == false
+                    $('.alert.alert-danger').show()
+                    $('.seedtext').hide()
+                    $('.seed').hide()
+                    $('.alert.alert-danger').click ()->
+                      $('.seed').show()
+                      $('.alert.alert-danger').hide()
+                error: (response_data) ->
+                  console.log "You have failed an ajax call to save seed", response_data
+
                 tilt = 500
                 
             else if window.gesture == "Pitch" && previous_motion != window.gesture
@@ -237,8 +258,8 @@
     //             %animatemotion{:dur => "1.5s", :repeatcount => 1}
     //                 %mpath{"xlink:href" => "#theMotionPath"}
 
-    %div#gesture GESTURE
-    %div.testing ASGDAGAD
+    // %div#gesture GESTURE
+    // %div.testing ASGDAGAD
 
     %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
@@ -260,14 +281,13 @@
         %div.seedtext#9 Entrepreneurs are great at dealing with uncertainty and also very good at minimizing risk. That’s the classic entrepreneur
         %div.seedtext#10 We may encounter many defeats but we must not be defeated
         %div.emptyseedconfirmation Click this to edit your message
-
-    
         %div.alert.alert-success Seed was planted!
-    
+        %div.alert.alert-danger Seed could not be planted without a message!
+
     
 = render :partial => "application/to_home"
 // IGNORE, BUT KEEP THIS LINE (Back button)   
-= render :partial => "application/back_to_root"
+// = render :partial => "application/back_to_root"
 
 :scss
 
@@ -419,6 +439,13 @@
         position: absolute;
         bottom: 10%;
         left: 30%;
+    }
+    
+    .alert.alert-danger{
+      font-weight: bold;
+      position: absolute;
+      bottom: 10%;
+      left: 30%;
     }
 
 

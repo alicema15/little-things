@@ -2,12 +2,17 @@ class HomepageController < ApplicationController
    
    def home
       @seed_type = Plant.Images.sample
-      if session[:plant_id] == nil
+      if session[:plant_id] == nil || Plant.find_by_id(@plant_id).nil?
         plant = Plant.create
         plant.save
         session[:plant_id] = plant.id
       end
       @plant_id = session[:plant_id]
+      if !Plant.find_by_id(@plant_id).messages.empty?
+        @curr_message = Plant.find_by_id(@plant_id).messages.last.text
+      else
+        @curr_message = "No message saved yet"
+      end
       # when you come back to home view, you should pass into the params a plant_id
       # this will help render the proper image, text, or soundbyte back to the home view
       # if params[:plant_id]
