@@ -69,7 +69,7 @@
             console.log "you're about to make an ajax call"
             $.ajax
               type: 'POST'
-              url: 'https://littlethings-alicema15.c9users.io/home/nearby'
+              url: '/home/nearby'
               data: JSON.stringify({ 'my_lat' : position.coords.latitude, 'my_long': position.coords.longitude })
               contentType: 'application/json'
               dataType: 'script'
