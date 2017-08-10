@@ -1,5 +1,12 @@
 :coffeescript
   $ ->
+    $('.wrap').toggleClass 'active'
+    $('#save-seed, #seed-image').on 'click', ->
+      $('.wrap, #seed-image').toggleClass 'active'
+      if $('#seed-image').hasClass('active')
+        $('#seed-image').show()
+        $('#seed-image').attr 'src', "happy_seed.png"
+      false
     $('#save-seed-form').submit ->
       valuesToSubmit = $(this).serialize()
       $.ajax
@@ -51,7 +58,7 @@
       return
     $('#to-map').hide()
     $('#new-location').hide()
-    $('#plant-image').hide()
+    $('#seed-image').hide()
     $('#to-trees').hide()
     if navigator.geolocation
     
@@ -90,8 +97,9 @@
                 else
                   $('#to-map').show()
                   $('#to-trees').show()
-                  $('#plant-image').show()
-                  $('#plant-image').attr 'src', new_plant_type
+                  if $('#seed-image').hasClass('active')
+                    $('#seed-image').show()
+                    $('#seed-image').attr 'src', new_plant_type
                   $('#location-status').text = 'You\'re near a seedbed!'
                   console.log 'Should be setting the location status'
                   document.getElementById('location-status').innerHTML = 'You are near a seedbed!'
@@ -131,24 +139,25 @@
 .container.text-center.seed-alert
   %h2#location-status Finding Your Location
   .btn.btn-md.btn-default#new-location Add a Location
+.wrap
+  .content
+    = form_tag save_seed_path, {:id => "save-seed-form", :remote => true, :method => :post} do
+      .embed-submit-field
+        - if session[:plant_id]
+          %textarea{:cols => "50", :name => "comment", :placeholder => "Fill your seed with a memento", :rows => "4", :value => @curr_message}
+          -# match if ends with png
+          -# match if ends with mp3/mp4 
+          -# then render inside of placeholder
+        %button{:type => "submit", :id => "save-seed"} Save!
+      %label{:for => "image_uploads"}
+        = image_tag "pic.png", :width=> "25%"
+        = image_tag "vid.png", :width=> "25%"
+        = image_tag "audio.png", :width=> "25%"
+      %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file", :style => "opacity: 0;"}/
 .container
-  = form_tag save_seed_path, {:id => "save-seed-form", :remote => true, :method => :post} do
-    .embed-submit-field
-      - if session[:plant_id]
-        %textarea{:cols => "50", :name => "comment", :placeholder => "Fill your seed with a memento", :rows => "4", :value => @curr_message}
-        -# match if ends with png
-        -# match if ends with mp3/mp4 
-        -# then render inside of placeholder
-      %button{:type => "submit", :id => "save-seed"} Save!
-    %label{:for => "image_uploads"}
-      = image_tag "pic.png", :width=> "25%"
-      = image_tag "vid.png", :width=> "25%"
-      = image_tag "audio.png", :width=> "25%"
-    %input#image_uploads{:accept => "audio/*,video/*,image/*", :name => "image_uploads", :type => "file", :style => "opacity: 0;"}/
-    #system-status
-    //#current-message= "Current Message: " + @curr_message
-.container
-  %image.seed#plant-image
+  %image.seed#seed-image
+.container#plant-seed
+  #system-status
   .btn.btn-md.btn-success#to-map Plant My Seed
   .btn.btn-md.btn-default#to-trees View All Seeds
 
@@ -191,14 +200,18 @@
     margin-top: 0px;
   }
   
-  #plant-image{
+  #seed-image{
+    position: absolute;
+    z-index: 1;
+    top: 45%;
+    left: 40%;
     height: 100px;
     width: 100px;
   }
 
   .embed-submit-field {
     position: relative;
-    
+    z-index:2;
     textarea {
       width: 100%;
       height: 150px;
@@ -248,4 +261,88 @@
   #system-status {
     margin-top: -20px;
     text-align: center;
+  }
+    
+  
+  .wrap {
+    position: absolute;
+    overflow: hidden;
+    top: 40%;
+    right: 10%;
+    bottom: 23%;
+    left: 10%;
+    padding: 20px 50px;
+    display: block;
+    transform: translateY(20px);
+    transition: all 0.5s;
+    visibility: hidden;
+  }
+  .wrap .content {
+    opacity: 0;
+  }
+  .wrap:before {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background-color:rgba(0, 0, 0, 0.0);
+    bottom: 10px;
+    left: 50%;
+    top: 95%;
+    color: #fff;
+    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .wrap.active {
+    display: block;
+    visibility: visible;
+    transition: all 600ms;
+    transform: translateY(0px);
+    transition: all 0.5s;
+  }
+  .wrap.active:before {
+    height: 500px;
+    width: 500px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+    display: block;
+    -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .wrap.active .content {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  
+  a.button {
+    padding: 11px 11px 13px 13px;
+    outline: none;
+    border-radius: 50%;
+    background: #007fed;
+    color: #fff;
+    font-size: 24px;
+    display: block;
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    top: auto;
+    margin-left: -25px;
+    transition: transform 0.25s;
+  }
+  a.button:hover {
+    text-decoration: none;
+    background: #2198ff;
+  }
+  image#seed-image.active {
+    transform: rotate(135deg);
+    transition: transform 0.5s;
+  }
+  #plant-seed {
+    position: absolute;
+    top: 80%;
+    left: 15%;
   }
