@@ -1,14 +1,14 @@
 :coffeescript
   $ ->
+    $('#seed-image').show()
+    $('#seed-image').attr 'src', "happy_seed.png"
     $('.wrap').toggleClass 'active'
-    $('#save-seed, #seed-image').on 'click', ->
+    $('#seed-image').click ->
       $('.wrap, #seed-image').toggleClass 'active'
-      if $('#seed-image').hasClass('active')
-        $('#seed-image').show()
-        $('#seed-image').attr 'src', "happy_seed.png"
       false
     $('#save-seed-form').submit ->
       valuesToSubmit = $(this).serialize()
+      $('.wrap, #seed-image').toggleClass 'active'
       $.ajax
         method: 'POST'
         url: '/home/save_seed'
@@ -58,7 +58,6 @@
       return
     $('#to-map').hide()
     $('#new-location').hide()
-    $('#seed-image').hide()
     $('#to-trees').hide()
     if navigator.geolocation
     
@@ -157,9 +156,11 @@
 .container
   %image.seed#seed-image
 .container#plant-seed
-  #system-status
   .btn.btn-md.btn-success#to-map Plant My Seed
-  .btn.btn-md.btn-default#to-trees View All Seeds
+  .btn.btn-md.btn-success#to-trees View All Seeds
+.container
+  %p#system-status
+
 
 
 
@@ -203,8 +204,8 @@
   #seed-image{
     position: absolute;
     z-index: 1;
-    top: 45%;
-    left: 40%;
+    top: 50%;
+    left: 38%;
     height: 100px;
     width: 100px;
   }
@@ -267,15 +268,16 @@
   .wrap {
     position: absolute;
     overflow: hidden;
-    top: 40%;
+    top: 45%;
     right: 10%;
-    bottom: 23%;
+    bottom: 20%;
     left: 10%;
     padding: 20px 50px;
     display: block;
     transform: translateY(20px);
     transition: all 0.5s;
     visibility: hidden;
+    z-index: 2;
   }
   .wrap .content {
     opacity: 0;
@@ -346,3 +348,9 @@
     top: 80%;
     left: 15%;
   }
+  #system-status {
+    position: absolute;
+    top: 90%;
+    left: 35%;
+  }
+  
