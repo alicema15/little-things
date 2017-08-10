@@ -18,6 +18,15 @@
             ctx.fillStyle = 'green'
             console.log "canvas cleared"
             
+        growTree = ->
+            clearCanvas()
+            CURRHEIGHT++
+            if CURRHEIGHT <= MAXHEIGHT
+                drawTree CURRHEIGHT
+            else
+                CURRHEIGHT = 5
+            return
+            
         drawTree = (i) ->
             l = 40 + 80 * Math.random()
             
@@ -93,15 +102,6 @@
         ctx.globalCompositeOperation = 'destination-over'
         window.gesture = null
 
-        $('.clear').on 'click', clearCanvas
-        $('.grow').click ->
-            clearCanvas()
-            CURRHEIGHT++
-            if CURRHEIGHT <= MAXHEIGHT
-                drawTree CURRHEIGHT
-            else
-                CURRHEIGHT = 5
-            return
 
         $(document).ready ->
 
@@ -214,6 +214,7 @@
                 #smaller = seedtochange.width() / 1.1
                 #$("#seed3").width(smaller)
             if window.gesture == "Roll" && previous_motion != window.gesture
+              growTree()
               url = window.location.pathname
               plant_location_id = url.substring(url.lastIndexOf('/') + 1)
               $.ajax
@@ -245,13 +246,9 @@
             else if window.gesture == "Pitch" && previous_motion != window.gesture
                 random_message()
 
-        $('.button.grow').click () ->
-            $('.seedtext').hide()
 
 .container-fluid
     %canvas#canvas{:height => "400", :width => "280"}
-    .button-container
-        .button.grow Grow Tree
     // %svg#Layer_1{:space => "preserve", :style => "enable-background:new 0 0 231.8 266.4;", :version => "1.1", :viewbox => "new 0 0 231.8 266.4", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
     //     %path#theMotionPath{:d => d="M0,66.3c0,0,167.8-227,199.6,200.1", :fill => "none"}
     //     %svg{:xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
@@ -346,15 +343,15 @@
             position: absolute;
             top: -50%;
             left: 5%;
-            background: lighten(lightgray, 30%);
+            background: lighten(gray, 45%);
             width: 90%;
-            height: 65%;
+            height: 50%;
             padding: 10px;
             text-align: center;
             border-radius: 5px;
-            -webkit-box-shadow:0 0 10px blue; 
-            -moz-box-shadow: 0 0 10px blue; 
-            box-shadow:0 0 10px blue;
+            -webkit-box-shadow:0 0 20px desaturate(blue, 30%); 
+            -moz-box-shadow: 0 0 20px desaturate(blue, 30%); 
+            box-shadow:0 0 20px desaturate(blue, 30%);
         }
         
 

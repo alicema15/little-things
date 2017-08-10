@@ -38,7 +38,7 @@
     $('#to-trees').click ->
       $.ajax
         method: 'get'
-        url: '/branches/${plant_location_id}/seeds'
+        url: '/branches/' + plant_location_id+ '/seeds'
         data: location_id: plant_location_id
         success: (data) ->
           console.log 'SUCCESS', data
@@ -218,7 +218,7 @@
       padding: 15px;
       border:2px solid #768c21;
       border-color: #768c21;
-      background: #f0f4c3;
+      background: lighten(#f0f4c3, 15%);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       
     }
