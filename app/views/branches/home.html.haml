@@ -104,39 +104,7 @@
             return
 
         $(document).ready ->
-<<<<<<< HEAD
-            $('#seed1').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#1').toggle 'show'
-            $('#seed2').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#2').toggle 'show'          
-            $('#seed3').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#3').toggle 'show'
-            $('#seed4').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#4').toggle 'show'
-            $('#seed5').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#5').toggle 'show'
-            $('#seed6').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#6').toggle 'show'
-            $('#seed7').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#7').toggle 'show'
-            $('#seed8').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#8').toggle 'show'
-            $('#seed9').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#9').toggle 'show'
-            $('#seed10').click ->
-                $('.seedtext').toggle 'hide'
-                $('.seedtext#10').toggle 'show'
 
-=======
             $('.alert.alert-danger').hide()
             $('.seedtext').hide()
             $('.emptyseedconfirmation').hide()
@@ -296,7 +264,6 @@
         %div.imgscroll
             - @plants.each do |plant|
                 = image_tag plant.plant_pic, :class=> "seed", :id => "seed#{plant.id}", :name => "#{plant.id}"
-                // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
         -@plants.each do |plant|
             - if !plant.messages.empty?
                 %div{:class => "seedtext", :id => "#{plant.id}", :style => {display: 'none'}}= plant.messages.last.text
@@ -310,16 +277,10 @@
         %div.seedtext#8 Failure will never overtake me if my determination to succeed is strong enough
         %div.seedtext#9 Entrepreneurs are great at dealing with uncertainty and also very good at minimizing risk. That’s the classic entrepreneur
         %div.seedtext#10 We may encounter many defeats but we must not be defeated
-
-    
-// IGNORE, BUT KEEP THIS LINE (Back button)   
-= render :partial => "application/back_to_root"
-        
         %div.emptyseedconfirmation Click this to edit your message
         %div.alert.alert-success Seed was planted!
         %div.alert.alert-danger Seed could not be planted without a message!
 
-    
 = render :partial => "application/to_home"
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 // = render :partial => "application/back_to_root"
@@ -368,14 +329,14 @@
         z-index: 100;
     }
     .grass{
-        position: relative;
-        bottom: 15%;
+        position: absolute;
+        bottom: 0;
         z-index: 51;
         // overflow: hidden;
         
         .imgscroll{
            position: absolute;
-           bottom: 20%;
+           bottom: 5%;
            overflow: auto;
            z-index: 9999;
            white-space: nowrap;
