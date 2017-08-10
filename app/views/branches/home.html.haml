@@ -104,6 +104,7 @@
             return
 
         $(document).ready ->
+
             $('.alert.alert-danger').hide()
             $('.seedtext').hide()
             $('.emptyseedconfirmation').hide()
@@ -258,15 +259,11 @@
     //             %animatemotion{:dur => "1.5s", :repeatcount => 1}
     //                 %mpath{"xlink:href" => "#theMotionPath"}
 
-    // %div#gesture GESTURE
-    // %div.testing ASGDAGAD
-
     %div.grass
         =image_tag("https://preview.c9users.io/samyuktaraman/final-project/littlethings/public/grass.png", width: '100%')
         %div.imgscroll
             - @plants.each do |plant|
                 = image_tag plant.plant_pic, :class=> "seed", :id => "seed#{plant.id}", :name => "#{plant.id}"
-                // %image{:height => "20px", :href=> "happy_seed.png", :width => "40px"}
         -@plants.each do |plant|
             - if !plant.messages.empty?
                 %div{:class => "seedtext", :id => "#{plant.id}", :style => {display: 'none'}}= plant.messages.last.text
@@ -284,7 +281,6 @@
         %div.alert.alert-success Seed was planted!
         %div.alert.alert-danger Seed could not be planted without a message!
 
-    
 = render :partial => "application/to_home"
 // IGNORE, BUT KEEP THIS LINE (Back button)   
 // = render :partial => "application/back_to_root"
@@ -333,17 +329,17 @@
         z-index: 100;
     }
     .grass{
-        position: relative;
-        bottom: 15%;
+        position: absolute;
+        bottom: 0;
         z-index: 51;
         // overflow: hidden;
         
         .imgscroll{
-            position: absolute;
-            bottom: 20%;
-            overflow: auto;
-            z-index: 9999;
-            white-space: nowrap;
+           position: absolute;
+           bottom: 5%;
+           overflow: auto;
+           z-index: 9999;
+           white-space: nowrap;
         }
         
         .seedtext{
@@ -361,6 +357,7 @@
             box-shadow:0 0 10px blue;
         }
         
+
         .emptyseedconfirmation{
             position:absolute;
             top: -30%;
@@ -430,6 +427,9 @@
         };
     }
     
+    #seed {
+    	animation: pulse 1s linear infinite;
+    }
     .seed {
     	animation: pulse 1s linear infinite;
     }
@@ -453,7 +453,7 @@
     // .addClass -> drop shadow, different colors
     // opacity indicates link is being disabled
     // add glow for the one that's selected -- desaturated blue glow
-    
+
     // #seed:hover {
     // 	animation :none;
     // }
