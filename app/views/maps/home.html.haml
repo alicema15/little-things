@@ -212,9 +212,11 @@
             pos = 
               lat: position.coords.latitude
               lng: position.coords.longitude
-            infoWindow.setPosition pos
-            infoWindow.setContent 'My Location.'
-            infoWindow.open map
+            -# preventing infoWindow from being updated
+            if !(window.seed_window) || (window.seed_window.show == false)
+              infoWindow.setPosition pos
+              infoWindow.setContent 'My Location.'
+              infoWindow.open map
             if window.seed == false
               map.setCenter pos
             Plant = getNearby: (my_lat, my_long) ->
