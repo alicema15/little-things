@@ -256,14 +256,6 @@
                         -#marker.metadata = {class: "plant"};
                         marker.setAnimation google.maps.Animation.BOUNCE
                         marker.addListener 'click', ->
-<<<<<<< HEAD
-                          window.seed_window.open map, marker
-                          window.seed_window.show = true
-                          if @getAnimation() != null
-                            @setAnimation null
-                          else
-                            @setAnimation google.maps.Animation.BOUNCE
-=======
                           -#window.seed_window.open map, marker
                           -#window.seed_window.show = true
                           if this.getAnimation() != null
@@ -285,7 +277,6 @@
                             window.seed_window.close map, marker
                             window.seed_window.show = false
                             infoWindow.open map
->>>>>>> e9dcd03ce47b55eb6a860362a355de203425c150
                           return
                           console.log 'add listener for message window'
                         console.log 'added a marker at location: ${feature.position}'
