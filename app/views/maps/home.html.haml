@@ -415,15 +415,7 @@
                               data:
                                 location_id: plant_location_id
                               success: (data) ->
-                                console.log "Passed the data into the controller to get a view for the marker", data
-                                new_content = contentString = "<div>" + "<a href=https://littlethings-alicema15.c9users.io" + data.goto + ">" + "</div>"
-                                console.log("printing new_content:" + new_content)
-                                -#window.seed_window = new (google.maps.InfoWindow)(content: new_content)
-                                -#window.seed_window.setContent(new_content)
-                                console.log(data.goto)
-                                window.seed_window.setContent('<p> hello there friend I like you quite a bit </p>')
-                                please_work = '<a href="https://littlethings-alicema15.c9users.io"' + data.goto + '> Go to Branches </a>'
-                                window.seed_window.setContent('<a href="https://littlethings-alicema15.c9users.io"' + data.goto + '> Go to Branches </a>')
+                                window.seed_window.setContent('<a href=' + data.goto + '>' + 'GO HOME </a>')
                                 window.seed_window.open map, marker
                                 return
                           else

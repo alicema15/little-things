@@ -50,7 +50,7 @@ class MapsController < ApplicationController
   
   def location_info
     puts("you are making a request for the location info from maps view!!")
-    render :json => {params: params, goto: branches_path(params[:location_id])}
+    render :json => {params: params, goto: branches_url(params[:location_id])}
   end
 
   private
