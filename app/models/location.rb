@@ -11,7 +11,7 @@ class Location < ActiveRecord::Base
   end
   
   def self.nearby_planting?(lat, long)
-    closest = 50
+    closest = 3000
     location = nil
     self.all.each do |place|
       start = []

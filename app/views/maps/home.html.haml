@@ -253,13 +253,39 @@
                           position: feature.position
                           icon: image
                           map: map)
+                        -#marker.metadata = {class: "plant"};
+                        marker.setAnimation google.maps.Animation.BOUNCE
                         marker.addListener 'click', ->
+<<<<<<< HEAD
                           window.seed_window.open map, marker
                           window.seed_window.show = true
                           if @getAnimation() != null
                             @setAnimation null
                           else
                             @setAnimation google.maps.Animation.BOUNCE
+=======
+                          -#window.seed_window.open map, marker
+                          -#window.seed_window.show = true
+                          if this.getAnimation() != null
+                            this.setAnimation null
+                            -#window.seed_window.open map, marker
+                            window.seed_window.show = true
+                            infoWindow.close map
+                            $.ajax
+                              url: 'map/location_info'
+                              method: 'get'
+                              data:
+                                location_id: plant_location_id
+                              success: (data) ->
+                                window.seed_window.setContent('<a href=' + data.goto + '>' + 'GO HOME </a>')
+                                window.seed_window.open map, marker
+                                return
+                          else
+                            this.setAnimation google.maps.Animation.BOUNCE
+                            window.seed_window.close map, marker
+                            window.seed_window.show = false
+                            infoWindow.open map
+>>>>>>> e9dcd03ce47b55eb6a860362a355de203425c150
                           return
                           console.log 'add listener for message window'
                         console.log 'added a marker at location: ${feature.position}'
@@ -315,8 +341,9 @@
 
 %body
   = render :partial => "application/to_home"
-  = render :partial => "application/locations"
   = render :partial => "application/to_branch"
+
+  = render :partial => "application/locations"
   #map
   %script{:defer => "defer", :src => @customized_map}
 

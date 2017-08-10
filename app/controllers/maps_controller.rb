@@ -31,6 +31,7 @@ class MapsController < ApplicationController
       @plant = location.plants.last
       @lat = location.latitude
       @long = location.longitude
+      @location_id = location.id
       if location.plants.empty?
         @png = 'x.png'
       else
@@ -40,10 +41,16 @@ class MapsController < ApplicationController
       @lat = ""
       @long = ""
       @png = ""
+      @location_id = location.id
     end
     respond_to do |format|
       format.js
     end
+  end
+  
+  def location_info
+    puts("you are making a request for the location info from maps view!!")
+    render :json => {params: params, goto: branches_url(params[:location_id])}
   end
 
   private
